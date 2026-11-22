@@ -9,10 +9,17 @@
     />
     <meta name="theme-color" content="#242424" />
     <title>RUOTA — Pizzeria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/variables.css" />
     <link rel="stylesheet" href="./css/background.css" />
     <link rel="stylesheet" href="./css/header.css" />
+    <link rel="stylesheet" href="./css/pizza-intro.css" />
   </head>
   <body>
     <main class="page" aria-label="RUOTA">
@@ -28,7 +35,37 @@
         </nav>
       </header>
 
-      <!-- A apresentação das pizzas será construída na próxima etapa. -->
+      <section class="pizza-intro" aria-labelledby="pizza-name">
+        <div class="pizza-intro__content">
+          <p class="pizza-intro__eyebrow">FEITA PARA SER SABOREADA</p>
+          <h1 class="pizza-intro__title" id="pizza-name">Nome da pizza</h1>
+          <p class="pizza-intro__price">R$ <span>00,00</span></p>
+
+          <p class="pizza-intro__description">
+            Uma descrição breve e apetitosa da pizza selecionada entra aqui.
+          </p>
+
+          <div class="pizza-ingredients" aria-label="Ingredientes">
+            <span class="pizza-ingredients__label">INGREDIENTES</span>
+            <ul class="pizza-ingredients__list">
+              <li>Ingrediente</li>
+              <li>Ingrediente</li>
+              <li>Ingrediente</li>
+            </ul>
+          </div>
+
+          <a class="order-link" href="#pedidos">
+            <span class="order-link__button" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h13M12 5l7 7-7 7" />
+              </svg>
+            </span>
+            <span class="order-link__label">Pedir agora</span>
+          </a>
+        </div>
+
+        <div class="pizza-intro__visual" aria-hidden="true"></div>
+      </section>
     </main>
   </body>
 </html>
