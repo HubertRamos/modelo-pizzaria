@@ -198,10 +198,21 @@
       original?.focus();
     };
 
+    // Se o usuário voltar antes de terminar a animação de abertura,
+    // cancela a transferência pendente para ela não recriar o destaque fechado.
+    if (!featuredItem && transferAnimation) {
+      transferAnimation.cancel();
+      transferAnimation = null;
+      intro.classList.remove("has-details");
+      finishClose();
+      return;
+    }
+
     if (featuredItem && original) {
-      // O clone parte antes de esconder o destaque. Assim, a pizza em movimento
-      // continua visível enquanto o elemento fixo desaparece em paralelo.
-      animateTransfer(featuredItem, original, finishClose);
+      const itemToReturn = featuredItem;
+      featuredItem = null;
+      // A pizza retorna à roda enquanto o painel de detalhes desaparece.
+      animateTransfer(itemToReturn, original, finishClose);
       intro.classList.remove("has-details");
     } else {
       intro.classList.remove("has-details");
