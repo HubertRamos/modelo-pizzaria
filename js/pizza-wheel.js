@@ -1,8 +1,63 @@
-(() => {
+(async () => {
+  const catalog = await window.RUOTA.catalogReady;
   const wheel = document.querySelector(".pizza-wheel");
   if (!wheel) return;
 
-  const items = Array.from(wheel.querySelectorAll("[data-wheel-item]"));
+  const slots = Array.from(wheel.querySelectorAll("[data-wheel-item]"));
+  const allPizzas = catalog.products.filter(product => product.categoryId === "pizzas" && product.available !== false);
+  const featuredPizzas = allPizzas.filter(product => product.featured);
+  const wheelProducts = [...featuredPizzas, ...allPizzas.filter(product => !product.featured)].slice(0, slots.length);
+  const positionClasses = ["pizza-wheel__item--top", "pizza-wheel__item--upper-right", "pizza-wheel__item--lower-right", "pizza-wheel__item--lower-left", "pizza-wheel__item--upper-left"];
+  const positionOrder = wheelProducts.length === 2 ? [1, 3] : wheelProducts.length === 3 ? [0, 2, 4] : positionClasses.map((_, index) => index);
+  slots.forEach((item, index) => {
+    const product = wheelProducts[index];
+    if (!product) { item.remove(); return; }
+    item.classList.remove(...positionClasses);
+    item.classList.add(positionClasses[positionOrder[index]]);
+    item.dataset.pizzaId = product.id;
+    item.dataset.pizzaName = product.name;
+    item.setAttribute("aria-label", "Ver detalhes de " + product.name);
+    item.replaceChildren();
+    if (product.image) {
+      const image = document.createElement("img");
+      image.src = product.image;
+      image.alt = "";
+      item.append(image);
+    } else {
+      const label = document.createElement("span");
+      label.textContent = product.name;
+      item.append(label);
+    }
+  });
+  const items = slots.slice(0, wheelProducts.length);
+  const heroTitle = document.querySelector("#pizza-name");
+  const heroPrice = document.querySelector(".pizza-intro__price span");
+  const heroDescription = document.querySelector(".pizza-intro__description");
+  const heroIngredients = document.querySelector(".pizza-intro .pizza-ingredients__list");
+  const detailPrice = document.querySelector("#pizza-detail-price");
+  const detailDescription = document.querySelector("#pizza-detail-description");
+  const detailIngredients = document.querySelector("#pizza-detail-ingredients");
+  const formatMoney = value => window.RUOTA.formatMoney(value);
+  const fillIngredients = (list, ingredients) => {
+    if (!list) return;
+    list.replaceChildren();
+    (Array.isArray(ingredients) ? ingredients : []).forEach(ingredient => {
+      const li = document.createElement("li");
+      li.textContent = ingredient;
+      list.append(li);
+    });
+  };
+  const renderSelectedProduct = product => {
+    if (!product) return;
+    if (heroTitle) heroTitle.textContent = product.name;
+    if (heroPrice) heroPrice.textContent = Number.isFinite(Number(product.price)) ? formatMoney(product.price).replace("R$", "").trim() : "A definir";
+    if (heroDescription) heroDescription.textContent = product.description || "";
+    fillIngredients(heroIngredients, product.ingredients);
+  };
+  if (!items.length) {
+    wheel.hidden = true;
+    return;
+  }
   const status = document.querySelector("#pizza-wheel-status");
   const intro = document.querySelector(".pizza-intro");
   const detail = document.querySelector("#pizza-detail");
@@ -50,25 +105,18 @@
   };
 
   const addSelectedPizzaToCart = () => {
-    const selected = items[activeIndex];
-    if (!selected) return;
-
-    const name = detailTitle?.textContent?.trim() || selected.dataset.pizzaName || `Pizza ${activeIndex + 1}`;
-    const priceText = detail?.querySelector("#pizza-detail-price")?.textContent?.trim() || "00,00";
+    const product = wheelProducts[activeIndex];
+    if (!product || !Number.isFinite(Number(product.price)) || Number(product.price) < 0) return;
     const cart = readCart();
-    const productId = selected.dataset.pizzaId || `pizza-${activeIndex + 1}`;
-    const existing = cart.find((item) => item.id === productId);
-
-    if (existing) {
-      existing.quantity = (Number(existing.quantity) || 0) + 1;
-    } else {
-      cart.push({ id: productId, name, price: priceText, quantity: 1 });
-    }
+    const existing = cart.find(item => item.id === product.id);
+    if (existing) existing.quantity = (Number(existing.quantity) || 0) + 1;
+    else cart.push({ id: product.id, name: product.name, price: Number(product.price), quantity: 1 });
 
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
       updateCartCount();
-      showCartFeedback(`${name} adicionada ao carrinho.`);
+      window.dispatchEvent(new CustomEvent("ruota:cart-updated"));
+      showCartFeedback(product.name + " adicionada ao carrinho.");
       addToCartButton?.classList.add("is-added");
       window.setTimeout(() => addToCartButton?.classList.remove("is-added"), 500);
     } catch {
@@ -77,6 +125,8 @@
   };
 
   updateCartCount();
+  window.addEventListener("ruota:cart-updated", updateCartCount);
+  window.addEventListener("storage", updateCartCount);
 
   const normalizeAngle = (angle) => ((angle + 180) % 360 + 360) % 360 - 180;
 
@@ -103,6 +153,7 @@
 
   const setActiveItem = (index) => {
     activeIndex = index;
+    renderSelectedProduct(wheelProducts[index]);
 
     items.forEach((item, itemIndex) => {
       const active = itemIndex === activeIndex;
@@ -162,8 +213,14 @@
     featured.replaceChildren();
     featuredItem = null;
 
-    const name = item.dataset.pizzaName || `Pizza ${index + 1}`;
+    const product = wheelProducts[index];
+    if (!product) return;
+    const name = product.name;
     if (detailTitle) detailTitle.textContent = name;
+    if (detailPrice) detailPrice.textContent = Number.isFinite(Number(product.price)) ? formatMoney(product.price).replace("R$", "").trim() : "A definir";
+    if (detailDescription) detailDescription.textContent = product.description || "";
+    fillIngredients(detailIngredients, product.ingredients);
+    if (addToCartButton) addToCartButton.disabled = !Number.isFinite(Number(product.price));
 
     intro.classList.add("has-details");
     detail.removeAttribute("inert");
