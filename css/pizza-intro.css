@@ -188,7 +188,7 @@
 .pizza-wheel__item {
   position: absolute;
   display: block;
-  width: clamp(6.5rem, 12vw, 10rem);
+  width: clamp(8rem, 15vw, 12rem);
   aspect-ratio: 1;
   border: 1px solid rgb(241 240 237 / 32%);
   border-radius: 50%;
@@ -267,7 +267,7 @@
   }
 
   .pizza-wheel__item {
-    width: clamp(5rem, 19vw, 7.5rem);
+    width: clamp(6rem, 22vw, 8.5rem);
   }
 }
 
