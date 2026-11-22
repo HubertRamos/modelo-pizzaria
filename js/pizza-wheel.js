@@ -111,11 +111,9 @@
     const cart = readCart();
     const existing = cart.find(item => item.id === product.id);
     if (existing) {
-      existing.name = product.name;
-      existing.price = Number(product.price);
       existing.quantity = (Number(existing.quantity) || 0) + 1;
     } else {
-      cart.push({ id: product.id, name: product.name, price: Number(product.price), quantity: 1 });
+      cart.push({ id: product.id, quantity: 1 });
     }
 
     try {
