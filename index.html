@@ -73,15 +73,45 @@
             aria-describedby="pizza-wheel-help"
           >
             <span class="pizza-wheel__track" aria-hidden="true"></span>
-            <span class="pizza-wheel__item pizza-wheel__item--top" data-wheel-item aria-hidden="true"></span>
-            <span class="pizza-wheel__item pizza-wheel__item--upper-right" data-wheel-item aria-hidden="true"></span>
-            <span class="pizza-wheel__item pizza-wheel__item--lower-right" data-wheel-item aria-hidden="true"></span>
-            <span class="pizza-wheel__item pizza-wheel__item--lower-left" data-wheel-item aria-hidden="true"></span>
-            <span class="pizza-wheel__item pizza-wheel__item--upper-left" data-wheel-item aria-hidden="true"></span>
+            <button class="pizza-wheel__item pizza-wheel__item--top" type="button" data-wheel-item data-pizza-name="Pizza 1" aria-label="Ver detalhes da Pizza 1"></button>
+            <button class="pizza-wheel__item pizza-wheel__item--upper-right" type="button" data-wheel-item data-pizza-name="Pizza 2" aria-label="Ver detalhes da Pizza 2"></button>
+            <button class="pizza-wheel__item pizza-wheel__item--lower-right" type="button" data-wheel-item data-pizza-name="Pizza 3" aria-label="Ver detalhes da Pizza 3"></button>
+            <button class="pizza-wheel__item pizza-wheel__item--lower-left" type="button" data-wheel-item data-pizza-name="Pizza 4" aria-label="Ver detalhes da Pizza 4"></button>
+            <button class="pizza-wheel__item pizza-wheel__item--upper-left" type="button" data-wheel-item data-pizza-name="Pizza 5" aria-label="Ver detalhes da Pizza 5"></button>
           </div>
-          <span class="visually-hidden" id="pizza-wheel-help">Arraste a roda com o mouse ou toque e deslize. Use as setas esquerda e direita para girar pelo teclado.</span>
+          <span class="visually-hidden" id="pizza-wheel-help">Arraste a roda com o mouse ou toque e deslize. Use as setas esquerda e direita para girar pelo teclado. Clique em uma pizza para ver os detalhes.</span>
           <span class="visually-hidden" id="pizza-wheel-status" aria-live="polite">Pizza 1 em destaque.</span>
         </div>
+
+        <aside class="pizza-detail" id="pizza-detail" aria-labelledby="pizza-detail-title" aria-hidden="true" inert>
+          <button class="pizza-detail__close" type="button" aria-label="Fechar detalhes da pizza">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+          <p class="pizza-detail__eyebrow">FEITA PARA SER SABOREADA</p>
+          <h2 class="pizza-detail__title" id="pizza-detail-title">Pizza 1</h2>
+          <p class="pizza-detail__price">R$ <span id="pizza-detail-price">00,00</span></p>
+          <p class="pizza-detail__description" id="pizza-detail-description">
+            Uma descrição breve e apetitosa da pizza selecionada entra aqui.
+          </p>
+          <div class="pizza-ingredients pizza-detail__ingredients" aria-label="Ingredientes">
+            <span class="pizza-ingredients__label">INGREDIENTES</span>
+            <ul class="pizza-ingredients__list" id="pizza-detail-ingredients">
+              <li>Ingrediente</li>
+              <li>Ingrediente</li>
+              <li>Ingrediente</li>
+            </ul>
+          </div>
+          <a class="order-link pizza-detail__order" href="#pedidos">
+            <span class="order-link__button" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h13M12 5l7 7-7 7" />
+              </svg>
+            </span>
+            <span class="order-link__label">Pedir agora</span>
+          </a>
+        </aside>
       </section>
     </main>
       <script src="./js/pizza-wheel.js" defer></script>
