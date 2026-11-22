@@ -133,19 +133,75 @@
   border-radius: 999px;
 }
 
-/* Área reservada para a fotografia da pizza, que será integrada depois. */
+/* Roda-base: círculos simples marcam apenas as futuras posições das pizzas. */
 .pizza-intro__visual {
   position: absolute;
   z-index: 0;
   inset: 0 0 0 34%;
+  overflow: hidden;
   pointer-events: none;
-  background:
-    radial-gradient(
-      ellipse 48% 52% at 72% 48%,
-      rgb(220 190 155 / 8%) 0%,
-      rgb(160 135 112 / 4%) 42%,
-      transparent 72%
-    );
+}
+
+.pizza-wheel {
+  position: absolute;
+  right: -5%;
+  bottom: -69%;
+  width: clamp(34rem, 66vw, 58rem);
+  aspect-ratio: 1;
+  border: 1px solid rgb(241 240 237 / 18%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 48%,
+    rgb(241 240 237 / 3%),
+    rgb(241 240 237 / 1%) 58%,
+    transparent 72%
+  );
+  transform: perspective(58rem) rotateX(58deg);
+  transform-origin: center center;
+}
+
+.pizza-wheel__track {
+  position: absolute;
+  inset: 7%;
+  border: 1px solid rgb(241 240 237 / 11%);
+  border-radius: 50%;
+}
+
+.pizza-wheel__item {
+  position: absolute;
+  display: block;
+  width: clamp(5.2rem, 10vw, 8.5rem);
+  aspect-ratio: 1;
+  border: 1px solid rgb(241 240 237 / 32%);
+  border-radius: 50%;
+  background: rgb(241 240 237 / 5%);
+  box-shadow: 0 0.8rem 2.5rem rgb(0 0 0 / 12%);
+}
+
+.pizza-wheel__item--top {
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pizza-wheel__item--upper-right {
+  top: 17%;
+  right: 9%;
+}
+
+.pizza-wheel__item--lower-right {
+  top: 49%;
+  right: 1%;
+}
+
+.pizza-wheel__item--lower-left {
+  top: 49%;
+  left: 1%;
+}
+
+.pizza-wheel__item--upper-left {
+  top: 17%;
+  left: 9%;
 }
 
 @media (max-width: 760px) {
@@ -159,14 +215,14 @@
     width: min(100%, 34rem);
   }
 
-  .pizza-intro__visual {
-    inset: 0;
-    background:
-      radial-gradient(
-        ellipse 90% 55% at 78% 38%,
-        rgb(220 190 155 / 7%) 0%,
-        transparent 72%
-      );
+  .pizza-wheel {
+    right: -36%;
+    bottom: -58%;
+    width: min(112vw, 43rem);
+  }
+
+  .pizza-wheel__item {
+    width: clamp(4.2rem, 16vw, 6.5rem);
   }
 }
 
@@ -177,5 +233,11 @@
 
   .pizza-intro__description {
     font-size: 0.84rem;
+  }
+
+  .pizza-wheel {
+    right: -58%;
+    bottom: -53%;
+    width: 125vw;
   }
 }
