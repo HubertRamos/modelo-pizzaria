@@ -37,6 +37,19 @@
   const heroIngredients = document.querySelector(".pizza-intro .pizza-ingredients__list");
   const detailPrice = document.querySelector("#pizza-detail-price");
   const detailDescription = document.querySelector("#pizza-detail-description");
+  const detailDescriptionToggle = document.createElement("button");
+  detailDescriptionToggle.type = "button";
+  detailDescriptionToggle.className = "pizza-detail__description-toggle";
+  detailDescriptionToggle.textContent = "Ler descrição completa";
+  detailDescriptionToggle.hidden = true;
+  detailDescriptionToggle.setAttribute("aria-expanded", "false");
+  detailDescriptionToggle.setAttribute("aria-controls", "pizza-detail-description");
+  detailDescription?.after(detailDescriptionToggle);
+  detailDescriptionToggle.addEventListener("click", () => {
+    const expanded = detailDescription.classList.toggle("is-expanded");
+    detailDescriptionToggle.textContent = expanded ? "Mostrar menos" : "Ler descrição completa";
+    detailDescriptionToggle.setAttribute("aria-expanded", String(expanded));
+  });
   const detailIngredients = document.querySelector("#pizza-detail-ingredients");
   const formatMoney = value => window.RUOTA.formatMoney(value);
   const fillIngredients = (list, ingredients) => {
@@ -107,6 +120,7 @@
 
   const addSelectedPizzaToCart = () => {
     const product = wheelProducts[activeIndex];
+    if (product && window.RUOTA?.openCustomization) { window.RUOTA.openCustomization(product); return; }
     if (!product || !Number.isFinite(Number(product.price)) || Number(product.price) < 0) return;
     const cart = readCart();
     const existing = cart.find(item => item.id === product.id);
@@ -222,7 +236,13 @@
     const name = product.name;
     if (detailTitle) detailTitle.textContent = name;
     if (detailPrice) detailPrice.textContent = Number.isFinite(Number(product.price)) ? formatMoney(product.price).replace("R$", "").trim() : "A definir";
-    if (detailDescription) detailDescription.textContent = product.description || "";
+    if (detailDescription) {
+      detailDescription.textContent = product.description || "";
+      detailDescription.classList.remove("is-expanded");
+      detailDescriptionToggle.hidden = detailDescription.textContent.length <= 220;
+      detailDescriptionToggle.textContent = "Ler descrição completa";
+      detailDescriptionToggle.setAttribute("aria-expanded", "false");
+    }
     fillIngredients(detailIngredients, product.ingredients);
     if (addToCartButton) addToCartButton.disabled = !Number.isFinite(Number(product.price));
 
