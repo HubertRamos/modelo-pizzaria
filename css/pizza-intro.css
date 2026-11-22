@@ -467,3 +467,76 @@
     transition: none;
   }
 }
+
+
+/* A pizza escolhida sai da roda e ganha uma posição de destaque. */
+.pizza-featured {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: clamp(2rem, 6vw, 6rem);
+  width: clamp(15rem, 26vw, 23rem);
+  aspect-ratio: 1;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-50%) scale(0.92);
+  transition:
+    opacity 260ms ease,
+    visibility 260ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pizza-intro.has-details .pizza-featured {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) scale(1);
+}
+
+.pizza-featured .pizza-wheel__item {
+  position: relative;
+  inset: auto;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  transform: none;
+  scale: 1;
+  border: 1px solid rgb(233 130 50 / 72%);
+  background: radial-gradient(circle at 35% 30%, rgb(241 240 237 / 12%), rgb(241 240 237 / 3%) 65%);
+  box-shadow:
+    0 0 0 0.7rem rgb(233 130 50 / 7%),
+    0 1.5rem 4rem rgb(0 0 0 / 32%);
+  cursor: default;
+}
+
+.pizza-wheel__item.is-transferred {
+  visibility: hidden;
+}
+
+.pizza-intro.has-details .pizza-detail {
+  width: min(25rem, 34%);
+}
+
+@media (max-width: 760px) {
+  .pizza-featured {
+    top: 13%;
+    left: 50%;
+    width: clamp(8.5rem, 34vw, 13rem);
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+
+  .pizza-intro.has-details .pizza-featured {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .pizza-intro.has-details .pizza-detail {
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pizza-featured {
+    transition: none;
+  }
+}
