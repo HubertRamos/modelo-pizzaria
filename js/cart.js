@@ -3,7 +3,7 @@
   if(!drawer||!list)return;
   const read=()=>{try{const v=JSON.parse(localStorage.getItem(KEY)||"[]");return Array.isArray(v)?v:[]}catch{return[]}};
   const save=(items)=>{localStorage.setItem(KEY,JSON.stringify(items));render();window.dispatchEvent(new CustomEvent("ruota:cart-updated"))};
-  const money=(value)=>{const s=String(value??"").replace(/R\\$/i,"").trim().replace(/\\./g,"").replace(",",".");if(!s||!/^\\d+(\\.\\d{1,2})?$/.test(s))return null;const n=Number(s);return Number.isFinite(n)&&n>0?n:null};
+  const money=(value)=>{const s=String(value??"").replace(/R\$/i,"").trim().replace(/\./g,"").replace(",",".");if(!s||!/^\d+(\.\d{1,2})?$/.test(s))return null;const n=Number(s);return Number.isFinite(n)&&n>0?n:null};
   const format=(n)=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
   const render=()=>{
     const items=read(), totalCount=items.reduce((sum,item)=>sum+Math.max(0,Number(item.quantity)||0),0);
