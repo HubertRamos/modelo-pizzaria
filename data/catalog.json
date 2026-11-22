@@ -35,7 +35,8 @@
         "Muçarela",
         "Tomate",
         "Manjericão"
-      ]
+      ],
+      "shortDescription": "Clássica e leve, com muçarela cremosa, tomate fresco e manjericão."
     },
     {
       "id": "pizza-calabresa",
@@ -51,7 +52,8 @@
         "Muçarela",
         "Calabresa",
         "Cebola"
-      ]
+      ],
+      "shortDescription": "Calabresa dourada, muçarela derretida e cebola em uma combinação clássica."
     },
     {
       "id": "bebida-refrigerante",
