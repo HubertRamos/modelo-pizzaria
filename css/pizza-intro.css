@@ -145,7 +145,7 @@
 .pizza-wheel {
   position: absolute;
   top: 50%;
-  right: -22%;
+  right: -16%;
   width: clamp(40rem, 72vw, 66rem);
   aspect-ratio: 1;
   border: 1px solid rgb(241 240 237 / 18%);
@@ -216,7 +216,7 @@
 
   .pizza-wheel {
     top: 58%;
-    right: -48%;
+    right: -42%;
     width: min(132vw, 50rem);
   }
 
@@ -236,7 +236,7 @@
 
   .pizza-wheel {
     top: 58%;
-    right: -68%;
+    right: -62%;
     width: 145vw;
   }
 }
