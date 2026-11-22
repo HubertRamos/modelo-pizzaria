@@ -52,7 +52,7 @@
     if (!product) return;
     if (heroTitle) heroTitle.textContent = product.name;
     if (heroPrice) heroPrice.textContent = Number.isFinite(Number(product.price)) ? formatMoney(product.price).replace("R$", "").trim() : "A definir";
-    if (heroDescription) heroDescription.textContent = product.description || "";
+    if (heroDescription) heroDescription.textContent = product.shortDescription || product.description || "";
     fillIngredients(heroIngredients, product.ingredients);
   };
   if (!items.length) {
