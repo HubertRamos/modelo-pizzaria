@@ -64,17 +64,26 @@
           </a>
         </div>
 
-        <div class="pizza-intro__visual" aria-hidden="true">
-          <div class="pizza-wheel">
-            <span class="pizza-wheel__track"></span>
-            <span class="pizza-wheel__item pizza-wheel__item--top"></span>
-            <span class="pizza-wheel__item pizza-wheel__item--upper-right"></span>
-            <span class="pizza-wheel__item pizza-wheel__item--lower-right"></span>
-            <span class="pizza-wheel__item pizza-wheel__item--lower-left"></span>
-            <span class="pizza-wheel__item pizza-wheel__item--upper-left"></span>
+        <div class="pizza-intro__visual">
+          <div
+            class="pizza-wheel"
+            role="group"
+            tabindex="0"
+            aria-label="Roda de pizzas. Arraste para girar ou use as setas do teclado."
+            aria-describedby="pizza-wheel-help"
+          >
+            <span class="pizza-wheel__track" aria-hidden="true"></span>
+            <span class="pizza-wheel__item pizza-wheel__item--top" data-wheel-item aria-hidden="true"></span>
+            <span class="pizza-wheel__item pizza-wheel__item--upper-right" data-wheel-item aria-hidden="true"></span>
+            <span class="pizza-wheel__item pizza-wheel__item--lower-right" data-wheel-item aria-hidden="true"></span>
+            <span class="pizza-wheel__item pizza-wheel__item--lower-left" data-wheel-item aria-hidden="true"></span>
+            <span class="pizza-wheel__item pizza-wheel__item--upper-left" data-wheel-item aria-hidden="true"></span>
           </div>
+          <span class="visually-hidden" id="pizza-wheel-help">Arraste a roda com o mouse ou toque e deslize. Use as setas esquerda e direita para girar pelo teclado.</span>
+          <span class="visually-hidden" id="pizza-wheel-status" aria-live="polite">Pizza 1 em destaque.</span>
         </div>
       </section>
     </main>
+      <script src="./js/pizza-wheel.js" defer></script>
   </body>
 </html>
