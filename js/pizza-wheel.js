@@ -9,6 +9,11 @@
   const detailTitle = document.querySelector("#pizza-detail-title");
   const featured = document.querySelector("#pizza-featured");
   const closeDetail = detail?.querySelector(".pizza-detail__close");
+  const addToCartButton = detail?.querySelector("#add-to-cart");
+  const cartCount = document.querySelector("#cart-count");
+  const cartFeedback = document.querySelector("#cart-feedback");
+  const CART_STORAGE_KEY = "ruota-cart";
+  let feedbackTimeout = null;
   let featuredItem = null;
   let transferAnimation = null;
   if (!items.length) return;
@@ -19,6 +24,59 @@
   let dragStartRotation = 0;
   let activePointerId = null;
   let activeIndex = -1;
+
+  const readCart = () => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || "[]");
+      return Array.isArray(stored) ? stored : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const updateCartCount = () => {
+    const count = readCart().reduce((total, item) => total + (Number(item.quantity) || 0), 0);
+    if (cartCount) cartCount.textContent = String(count);
+  };
+
+  const showCartFeedback = (message) => {
+    if (!cartFeedback) return;
+    cartFeedback.textContent = message;
+    cartFeedback.classList.add("is-visible");
+    window.clearTimeout(feedbackTimeout);
+    feedbackTimeout = window.setTimeout(() => {
+      cartFeedback.classList.remove("is-visible");
+    }, 2600);
+  };
+
+  const addSelectedPizzaToCart = () => {
+    const selected = items[activeIndex];
+    if (!selected) return;
+
+    const name = detailTitle?.textContent?.trim() || selected.dataset.pizzaName || `Pizza ${activeIndex + 1}`;
+    const priceText = detail?.querySelector("#pizza-detail-price")?.textContent?.trim() || "00,00";
+    const cart = readCart();
+    const productId = selected.dataset.pizzaId || `pizza-${activeIndex + 1}`;
+    const existing = cart.find((item) => item.id === productId);
+
+    if (existing) {
+      existing.quantity = (Number(existing.quantity) || 0) + 1;
+    } else {
+      cart.push({ id: productId, name, price: priceText, quantity: 1 });
+    }
+
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+      updateCartCount();
+      showCartFeedback(`${name} adicionada ao carrinho.`);
+      addToCartButton?.classList.add("is-added");
+      window.setTimeout(() => addToCartButton?.classList.remove("is-added"), 500);
+    } catch {
+      showCartFeedback("Não foi possível salvar o carrinho neste navegador.");
+    }
+  };
+
+  updateCartCount();
 
   const normalizeAngle = (angle) => ((angle + 180) % 360 + 360) % 360 - 180;
 
@@ -203,6 +261,7 @@
   });
 
   closeDetail?.addEventListener("click", closeDetails);
+  addToCartButton?.addEventListener("click", addSelectedPizzaToCart);
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && intro?.classList.contains("has-details")) {
