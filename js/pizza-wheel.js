@@ -62,6 +62,10 @@
     const to = destination.getBoundingClientRect();
     const clone = source.cloneNode(true);
     clone.classList.remove("is-active", "is-transferred");
+    const sourceStyle = getComputedStyle(source);
+    clone.style.border = sourceStyle.border;
+    clone.style.background = sourceStyle.background;
+    clone.style.boxShadow = sourceStyle.boxShadow;
     clone.style.position = "fixed";
     clone.style.left = `${from.left}px`;
     clone.style.top = `${from.top}px`;
