@@ -43,3 +43,56 @@ body.menu-detail-open{overflow:hidden}
 
 /* Mantém os cards compactos; a descrição completa fica na ficha do produto. */
 .menu-product__description{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+
+
+/* Microinterações suaves nos produtos do cardápio */
+.menu-product{
+  transform:translateY(0) scale(1);
+  transform-origin:center;
+  transition:transform .28s cubic-bezier(.2,.75,.25,1),border-color .28s ease,box-shadow .28s ease;
+  will-change:transform;
+}
+.menu-product__image img{
+  transition:transform .45s cubic-bezier(.2,.75,.25,1);
+}
+.menu-product__add{
+  transition:transform .2s ease,background-color .2s ease,box-shadow .2s ease;
+}
+.menu-product__add:active{transform:scale(.96)}
+@media(hover:hover) and (pointer:fine){
+  .menu-product:hover,
+  .menu-product:focus-within{
+    transform:translateY(-5px) scale(1.012);
+    border-color:rgb(233 130 50 / 42%);
+    box-shadow:0 1rem 2.5rem rgb(0 0 0 / 20%);
+  }
+  .menu-product:hover .menu-product__image img,
+  .menu-product:focus-within .menu-product__image img{transform:scale(1.045)}
+  .menu-product__add:hover{transform:translateY(-1px);box-shadow:0 .35rem 1rem rgb(233 130 50 / 18%)}
+}
+
+/* Expansão gradual da descrição dentro do modal */
+.menu-detail-dialog__description{
+  display:block;
+  max-height:8.5em;
+  overflow:hidden;
+  transition:max-height .42s cubic-bezier(.2,.75,.25,1),opacity .3s ease;
+}
+.menu-detail-dialog__description.is-expanded{display:block;max-height:60rem;overflow:hidden}
+.menu-detail-dialog__description-toggle{
+  transition:color .2s ease,opacity .2s ease;
+}
+.menu-detail-dialog__description-toggle:hover{color:#ffc078}
+.menu-detail-dialog{
+  transition:opacity .32s ease,transform .38s cubic-bezier(.2,.75,.25,1);
+}
+.menu-detail-backdrop{transition:opacity .32s ease}
+
+@media(hover:none){
+  .menu-product:active{transform:scale(.99)}
+}
+@media(prefers-reduced-motion:reduce){
+  .menu-product,.menu-product__image img,.menu-product__add,
+  .menu-detail-dialog__description,.menu-detail-dialog__description-toggle,
+  .menu-detail-dialog,.menu-detail-backdrop{transition:none!important;transform:none!important}
+}
