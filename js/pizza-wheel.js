@@ -4,6 +4,10 @@
 
   const items = Array.from(wheel.querySelectorAll("[data-wheel-item]"));
   const status = document.querySelector("#pizza-wheel-status");
+  const intro = document.querySelector(".pizza-intro");
+  const detail = document.querySelector("#pizza-detail");
+  const detailTitle = document.querySelector("#pizza-detail-title");
+  const closeDetail = detail?.querySelector(".pizza-detail__close");
   if (!items.length) return;
 
   const SELECT_ANGLE = 180;
@@ -37,16 +41,38 @@
   };
 
   const setActiveItem = (index) => {
-    if (index === activeIndex) return;
     activeIndex = index;
 
     items.forEach((item, itemIndex) => {
-      item.classList.toggle("is-active", itemIndex === activeIndex);
+      const active = itemIndex === activeIndex;
+      item.classList.toggle("is-active", active);
+      item.setAttribute("aria-pressed", String(active));
     });
 
     if (status) {
-      status.textContent = `Pizza ${activeIndex + 1} em destaque, à esquerda.`;
+      status.textContent = `${items[activeIndex]?.dataset.pizzaName || `Pizza ${activeIndex + 1}`} em destaque, à esquerda.`;
     }
+  };
+
+  const openDetails = (index) => {
+    const item = items[index];
+    if (!item || !detail || !intro) return;
+
+    const name = item.dataset.pizzaName || `Pizza ${index + 1}`;
+    if (detailTitle) detailTitle.textContent = name;
+
+    intro.classList.add("has-details");
+    detail.removeAttribute("inert");
+    detail.setAttribute("aria-hidden", "false");
+    closeDetail?.focus();
+  };
+
+  const closeDetails = () => {
+    if (!detail || !intro) return;
+    intro.classList.remove("has-details");
+    detail.setAttribute("inert", "");
+    detail.setAttribute("aria-hidden", "true");
+    items[activeIndex]?.focus();
   };
 
   const findClosestToSelectionPoint = () => {
@@ -87,6 +113,26 @@
     setActiveItem(index);
     setRotation(rotation + correction);
   };
+
+  items.forEach((item, index) => {
+    item.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const angle = getItemAngle(item);
+      const correction = normalizeAngle(SELECT_ANGLE - angle);
+      wheel.classList.add("is-snapping");
+      setRotation(rotation + correction);
+      setActiveItem(index);
+      openDetails(index);
+    });
+  });
+
+  closeDetail?.addEventListener("click", closeDetails);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && intro?.classList.contains("has-details")) {
+      closeDetails();
+    }
+  });
 
   wheel.addEventListener("transitionend", (event) => {
     if (event.propertyName !== "transform") return;
