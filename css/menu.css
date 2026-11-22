@@ -7,8 +7,8 @@
 .menu-product__details-trigger:focus-visible,.menu-detail-dialog button:focus-visible{outline:2px solid #e98232;outline-offset:4px}
 .menu-detail-backdrop{position:fixed;inset:0;z-index:80;background:rgb(0 0 0 / 68%);opacity:0;transition:opacity .22s ease}
 .menu-detail-backdrop.is-visible{opacity:1}
-.menu-detail-dialog{position:fixed;z-index:81;top:50%;left:50%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:min(54rem,calc(100vw - 2rem));max-height:min(42rem,calc(100dvh - 2rem));overflow:auto;border:1px solid rgb(241 240 237 / 15%);border-radius:1.2rem;background:#242424;color:var(--color-text);opacity:0;transform:translate(-50%,-47%) scale(.98);transition:opacity .22s ease,transform .22s ease;box-shadow:0 1.5rem 5rem rgb(0 0 0 / 38%)}
-.menu-detail-dialog.is-open{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.menu-detail-dialog{visibility:hidden;pointer-events:none;position:fixed;z-index:81;top:50%;left:50%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:min(54rem,calc(100vw - 2rem));max-height:min(42rem,calc(100dvh - 2rem));overflow:auto;border:1px solid rgb(241 240 237 / 15%);border-radius:1.2rem;background:#242424;color:var(--color-text);opacity:0;transform:translate(-50%,-47%) scale(.98);transition:opacity .22s ease,transform .22s ease;box-shadow:0 1.5rem 5rem rgb(0 0 0 / 38%)}
+.menu-detail-dialog.is-open{visibility:visible;pointer-events:auto;opacity:1;transform:translate(-50%,-50%) scale(1)}
 .menu-detail-dialog__close{position:absolute;top:.8rem;right:.8rem;z-index:2;display:grid;width:2.5rem;height:2.5rem;place-items:center;border:1px solid rgb(241 240 237 / 20%);border-radius:50%;background:rgb(25 25 25 / 75%);color:var(--color-text);font:300 1.7rem/1 var(--font-ui);cursor:pointer}
 .menu-detail-dialog__image{display:grid;min-height:22rem;place-items:center;overflow:hidden;background:radial-gradient(circle,rgb(233 130 50 / 13%),transparent 70%);color:rgb(241 240 237 / 38%);font:500 2rem var(--font-display)}
 .menu-detail-dialog__image img{width:100%;height:100%;min-height:22rem;object-fit:cover}
