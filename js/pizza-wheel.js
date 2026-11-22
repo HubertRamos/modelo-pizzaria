@@ -6,6 +6,7 @@
   const status = document.querySelector("#pizza-wheel-status");
   if (!items.length) return;
 
+  const SELECT_ANGLE = 180;
   let rotation = 0;
   let dragStartAngle = 0;
   let dragStartRotation = 0;
@@ -44,24 +45,32 @@
     });
 
     if (status) {
-      status.textContent = `Pizza ${activeIndex + 1} em destaque, à direita.`;
+      status.textContent = `Pizza ${activeIndex + 1} em destaque, à esquerda.`;
     }
   };
 
-  const updateActiveItem = () => {
+  const findClosestToSelectionPoint = () => {
     let closestIndex = 0;
+    let closestAngle = 0;
     let smallestDistance = Infinity;
 
     items.forEach((item, index) => {
-      const angle = getItemAngle(item);
-      const distance = Math.abs(normalizeAngle(angle));
+      const angle = normalizeAngle(getItemAngle(item) - SELECT_ANGLE);
+      const distance = Math.abs(angle);
+
       if (distance < smallestDistance) {
         smallestDistance = distance;
         closestIndex = index;
+        closestAngle = getItemAngle(item);
       }
     });
 
-    setActiveItem(closestIndex);
+    return { index: closestIndex, angle: closestAngle };
+  };
+
+  const updateActiveItem = () => {
+    const { index } = findClosestToSelectionPoint();
+    setActiveItem(index);
   };
 
   const setRotation = (nextRotation) => {
@@ -70,24 +79,13 @@
     updateActiveItem();
   };
 
-  const snapToRight = () => {
-    let closestIndex = 0;
-    let closestAngle = 0;
-    let smallestDistance = Infinity;
-
-    items.forEach((item, index) => {
-      const angle = normalizeAngle(getItemAngle(item));
-      const distance = Math.abs(angle);
-      if (distance < smallestDistance) {
-        smallestDistance = distance;
-        closestIndex = index;
-        closestAngle = angle;
-      }
-    });
+  const snapToSelectionPoint = () => {
+    const { index, angle } = findClosestToSelectionPoint();
+    const correction = normalizeAngle(SELECT_ANGLE - angle);
 
     wheel.classList.add("is-snapping");
-    setActiveItem(closestIndex);
-    setRotation(rotation - closestAngle);
+    setActiveItem(index);
+    setRotation(rotation + correction);
   };
 
   wheel.addEventListener("transitionend", (event) => {
@@ -118,7 +116,7 @@
       wheel.releasePointerCapture(event.pointerId);
     }
     activePointerId = null;
-    snapToRight();
+    snapToSelectionPoint();
   };
 
   wheel.addEventListener("pointerup", finishDrag);
@@ -132,11 +130,11 @@
       event.preventDefault();
       wheel.classList.remove("is-snapping");
       setRotation(rotation + (event.key === "ArrowRight" ? 15 : -15));
-      snapToRight();
+      snapToSelectionPoint();
     }
   });
 
   window.addEventListener("resize", updateActiveItem);
   setRotation(0);
-  snapToRight();
+  snapToSelectionPoint();
 })();
