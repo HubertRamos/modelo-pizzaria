@@ -110,8 +110,13 @@
     if (!product || !Number.isFinite(Number(product.price)) || Number(product.price) < 0) return;
     const cart = readCart();
     const existing = cart.find(item => item.id === product.id);
-    if (existing) existing.quantity = (Number(existing.quantity) || 0) + 1;
-    else cart.push({ id: product.id, quantity: 1 });
+    if (existing) {
+      existing.name = product.name;
+      existing.price = Number(product.price);
+      existing.quantity = (Number(existing.quantity) || 0) + 1;
+    } else {
+      cart.push({ id: product.id, name: product.name, price: Number(product.price), quantity: 1 });
+    }
 
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
