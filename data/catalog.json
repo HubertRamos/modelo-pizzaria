@@ -36,7 +36,59 @@
         "Tomate",
         "Manjericão"
       ],
-      "shortDescription": "Clássica e leve, com muçarela cremosa, tomate fresco e manjericão."
+      "shortDescription": "Clássica e leve, com muçarela cremosa, tomate fresco e manjericão.",
+      "customization": {
+        "enabled": true,
+        "sizes": [
+          {
+            "id": "media",
+            "name": "Média",
+            "slices": 6,
+            "price": 42.9
+          },
+          {
+            "id": "grande",
+            "name": "Grande",
+            "slices": 8,
+            "price": 49.9
+          },
+          {
+            "id": "familia",
+            "name": "Família",
+            "slices": 12,
+            "price": 56.9
+          }
+        ],
+        "halfAndHalf": {
+          "enabled": true,
+          "maxFlavors": 2,
+          "pricing": "highest"
+        },
+        "toppings": {
+          "enabled": true,
+          "maxSelections": 5,
+          "items": [
+            {
+              "id": "queijo-extra",
+              "name": "Queijo extra",
+              "price": 6
+            },
+            {
+              "id": "bacon",
+              "name": "Bacon",
+              "price": 7
+            },
+            {
+              "id": "azeitona",
+              "name": "Azeitona",
+              "price": 4.5
+            }
+          ]
+        },
+        "removableIngredients": {
+          "enabled": true
+        }
+      }
     },
     {
       "id": "pizza-calabresa",
@@ -53,7 +105,59 @@
         "Calabresa",
         "Cebola"
       ],
-      "shortDescription": "Calabresa dourada, muçarela derretida e cebola em uma combinação clássica."
+      "shortDescription": "Calabresa dourada, muçarela derretida e cebola em uma combinação clássica.",
+      "customization": {
+        "enabled": true,
+        "sizes": [
+          {
+            "id": "media",
+            "name": "Média",
+            "slices": 6,
+            "price": 44.9
+          },
+          {
+            "id": "grande",
+            "name": "Grande",
+            "slices": 8,
+            "price": 51.9
+          },
+          {
+            "id": "familia",
+            "name": "Família",
+            "slices": 12,
+            "price": 58.9
+          }
+        ],
+        "halfAndHalf": {
+          "enabled": true,
+          "maxFlavors": 2,
+          "pricing": "highest"
+        },
+        "toppings": {
+          "enabled": true,
+          "maxSelections": 5,
+          "items": [
+            {
+              "id": "queijo-extra",
+              "name": "Queijo extra",
+              "price": 6
+            },
+            {
+              "id": "bacon",
+              "name": "Bacon",
+              "price": 7
+            },
+            {
+              "id": "azeitona",
+              "name": "Azeitona",
+              "price": 4.5
+            }
+          ]
+        },
+        "removableIngredients": {
+          "enabled": true
+        }
+      }
     },
     {
       "id": "bebida-refrigerante",
