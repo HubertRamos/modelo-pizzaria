@@ -141,6 +141,7 @@
   });
 
   wheel.addEventListener("pointerdown", (event) => {
+    if (event.target.closest("[data-wheel-item]")) return;
     if (event.button !== 0 || activePointerId !== null) return;
     wheel.classList.remove("is-snapping");
     activePointerId = event.pointerId;
