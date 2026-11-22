@@ -7,7 +7,10 @@
   const intro = document.querySelector(".pizza-intro");
   const detail = document.querySelector("#pizza-detail");
   const detailTitle = document.querySelector("#pizza-detail-title");
+  const featured = document.querySelector("#pizza-featured");
   const closeDetail = detail?.querySelector(".pizza-detail__close");
+  let featuredItem = null;
+  let transferAnimation = null;
   if (!items.length) return;
 
   const SELECT_ANGLE = 180;
@@ -54,9 +57,49 @@
     }
   };
 
+  const animateTransfer = (source, destination, onFinish) => {
+    const from = source.getBoundingClientRect();
+    const to = destination.getBoundingClientRect();
+    const clone = source.cloneNode(true);
+    clone.classList.remove("is-active", "is-transferred");
+    clone.style.position = "fixed";
+    clone.style.left = `${from.left}px`;
+    clone.style.top = `${from.top}px`;
+    clone.style.width = `${from.width}px`;
+    clone.style.height = `${from.height}px`;
+    clone.style.margin = "0";
+    clone.style.zIndex = "30";
+    clone.style.pointerEvents = "none";
+    clone.style.transform = "none";
+    clone.style.inset = "auto";
+    document.body.append(clone);
+
+    const animation = clone.animate(
+      [
+        { left: `${from.left}px`, top: `${from.top}px`, width: `${from.width}px`, height: `${from.height}px`, borderRadius: "50%" },
+        { left: `${to.left}px`, top: `${to.top}px`, width: `${to.width}px`, height: `${to.height}px`, borderRadius: "50%" }
+      ],
+      { duration: 760, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" }
+    );
+
+    transferAnimation = animation;
+    animation.finished.then(() => {
+      clone.remove();
+      transferAnimation = null;
+      onFinish?.();
+    }).catch(() => clone.remove());
+    return animation;
+  };
+
   const openDetails = (index) => {
     const item = items[index];
-    if (!item || !detail || !intro) return;
+    if (!item || !detail || !intro || !featured) return;
+
+    if (featuredItem) {
+      featuredItem.classList.remove("is-transferred");
+      featuredItem.remove();
+      featuredItem = null;
+    }
 
     const name = item.dataset.pizzaName || `Pizza ${index + 1}`;
     if (detailTitle) detailTitle.textContent = name;
@@ -64,15 +107,42 @@
     intro.classList.add("has-details");
     detail.removeAttribute("inert");
     detail.setAttribute("aria-hidden", "false");
+    item.classList.add("is-transferred");
+
+    requestAnimationFrame(() => {
+      animateTransfer(item, featured, () => {
+        const displayItem = item.cloneNode(true);
+        displayItem.classList.remove("is-active", "is-transferred");
+        displayItem.removeAttribute("data-wheel-item");
+        displayItem.removeAttribute("aria-pressed");
+        displayItem.setAttribute("tabindex", "-1");
+        featured.replaceChildren(displayItem);
+        featuredItem = displayItem;
+      });
+    });
+
     closeDetail?.focus();
   };
 
   const closeDetails = () => {
-    if (!detail || !intro) return;
-    intro.classList.remove("has-details");
-    detail.setAttribute("inert", "");
-    detail.setAttribute("aria-hidden", "true");
-    items[activeIndex]?.focus();
+    if (!detail || !intro || !featured) return;
+    const original = items[activeIndex];
+
+    const finishClose = () => {
+      featured.replaceChildren();
+      featuredItem = null;
+      original?.classList.remove("is-transferred");
+      intro.classList.remove("has-details");
+      detail.setAttribute("inert", "");
+      detail.setAttribute("aria-hidden", "true");
+      original?.focus();
+    };
+
+    if (featuredItem && original) {
+      animateTransfer(featuredItem, original, finishClose);
+    } else {
+      finishClose();
+    }
   };
 
   const findClosestToSelectionPoint = () => {
