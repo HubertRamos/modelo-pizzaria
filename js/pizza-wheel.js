@@ -131,15 +131,18 @@
       featured.replaceChildren();
       featuredItem = null;
       original?.classList.remove("is-transferred");
-      intro.classList.remove("has-details");
       detail.setAttribute("inert", "");
       detail.setAttribute("aria-hidden", "true");
       original?.focus();
     };
 
     if (featuredItem && original) {
+      // O clone parte antes de esconder o destaque. Assim, a pizza em movimento
+      // continua visível enquanto o elemento fixo desaparece em paralelo.
       animateTransfer(featuredItem, original, finishClose);
+      intro.classList.remove("has-details");
     } else {
+      intro.classList.remove("has-details");
       finishClose();
     }
   };
