@@ -95,11 +95,10 @@
     const item = items[index];
     if (!item || !detail || !intro || !featured) return;
 
-    if (featuredItem) {
-      featuredItem.classList.remove("is-transferred");
-      featuredItem.remove();
-      featuredItem = null;
-    }
+    transferAnimation?.cancel();
+    items.forEach((wheelItem) => wheelItem.classList.remove("is-transferred"));
+    featured.replaceChildren();
+    featuredItem = null;
 
     const name = item.dataset.pizzaName || `Pizza ${index + 1}`;
     if (detailTitle) detailTitle.textContent = name;
