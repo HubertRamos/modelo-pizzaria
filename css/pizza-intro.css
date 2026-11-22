@@ -169,6 +169,10 @@
   cursor: grabbing;
 }
 
+.pizza-wheel.is-snapping {
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .pizza-wheel:focus-visible {
   outline: 1px solid #e98232;
   outline-offset: 8px;
