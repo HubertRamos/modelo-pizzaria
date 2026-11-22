@@ -1,5 +1,5 @@
 (() => {
-  const root = document.querySelector("#menu");
+  const root = document.querySelector("#cardapio");
   if (!root) return;
 
   const categoriesRoot = root.querySelector("#menu-categories");
