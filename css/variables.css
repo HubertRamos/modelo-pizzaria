@@ -4,5 +4,8 @@
   --color-background: #242424;
   --color-text: #f1f0ed;
 
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-ui: "DM Sans", Arial, sans-serif;
+
   --page-gutter: clamp(1.25rem, 4vw, 4rem);
 }
