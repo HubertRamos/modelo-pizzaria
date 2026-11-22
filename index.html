@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="./css/background.css" />
     <link rel="stylesheet" href="./css/header.css" />
     <link rel="stylesheet" href="./css/pizza-intro.css" />
+    <link rel="stylesheet" href="./css/cart.css" />
   </head>
   <body>
     <main class="page" aria-label="RUOTA">
@@ -32,7 +33,7 @@
         <nav class="site-nav" aria-label="Navegação principal">
           <a class="site-nav__link" href="#cardapio">Cardápio</a>
           <a class="site-nav__link" href="#pedidos">Pedidos</a>
-          <span class="site-cart" aria-live="polite">Carrinho <span class="site-cart__count" id="cart-count">0</span></span>
+          <button class="site-cart" id="open-cart" type="button" aria-haspopup="dialog" aria-controls="cart-drawer">Carrinho <span class="site-cart__count" id="cart-count" aria-live="polite">0</span></button>
         </nav>
       </header>
 
@@ -120,6 +121,12 @@
       </section>
       <p class="cart-feedback" id="cart-feedback" role="status" aria-live="polite"></p>
     </main>
-      <script src="./js/pizza-wheel.js" defer></script>
+    <div class="cart-backdrop" id="cart-backdrop" hidden></div>
+    <aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" inert>
+      <div class="cart-drawer__header"><div><p class="cart-drawer__eyebrow">SEU PEDIDO</p><h2 id="cart-title">Carrinho</h2></div><button class="cart-drawer__close" id="close-cart" type="button" aria-label="Fechar carrinho">×</button></div>
+      <div class="cart-drawer__body"><div class="cart-empty" id="cart-empty">Seu carrinho está vazio.<br />Escolha uma pizza para começar.</div><ul class="cart-items" id="cart-items" aria-live="polite"></ul><label class="cart-note-label" for="cart-note">Observações do pedido</label><textarea class="cart-note" id="cart-note" rows="3" placeholder="Ex.: retirar cebola, entregar na portaria..."></textarea></div>
+      <footer class="cart-drawer__footer"><div class="cart-total"><span>Total parcial</span><strong id="cart-total">A definir</strong></div><p class="cart-price-note" id="cart-price-note">Os valores serão calculados quando o cardápio tiver preços cadastrados.</p><button class="cart-checkout" id="cart-checkout" type="button" disabled>Continuar para entrega</button></footer>
+    </aside>
+    <script src="./js/pizza-wheel.js" defer></script><script src="./js/cart.js" defer></script>
   </body>
 </html>
