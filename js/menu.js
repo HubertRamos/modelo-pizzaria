@@ -249,15 +249,8 @@
     renderProducts();
   });
 
-  fetch("./data/catalog.json")
-    .then(response => {
-      if (!response.ok) throw new Error("Não foi possível carregar data/catalog.json");
-      return response.json();
-    })
+  window.RUOTA.catalogReady
     .then(data => {
-      if (!Array.isArray(data.categories) || !Array.isArray(data.products)) {
-        throw new Error("O catálogo precisa conter categories e products.");
-      }
       catalog = data;
       renderCategories();
       renderProducts();
