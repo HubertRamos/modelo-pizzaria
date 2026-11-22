@@ -23,7 +23,7 @@
         if (product.price !== null && product.price !== "" && !Number.isFinite(Number(product.price))) {
           throw new Error("O preço do produto " + product.name + " não é válido.");
         }
-        if (product.ingredients !== undefined && !Array.isArray(product.ingredients)) {
+        if (product.shortDescription !== undefined && typeof product.shortDescription !== "string") {\n          throw new Error("A descrição curta de " + product.name + " precisa ser um texto.");\n        }\n        if (product.ingredients !== undefined && !Array.isArray(product.ingredients)) {
           throw new Error("Os ingredientes de " + product.name + " precisam ser uma lista.");
         }
       });
