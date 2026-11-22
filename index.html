@@ -32,6 +32,7 @@
         <nav class="site-nav" aria-label="Navegação principal">
           <a class="site-nav__link" href="#cardapio">Cardápio</a>
           <a class="site-nav__link" href="#pedidos">Pedidos</a>
+          <span class="site-cart" aria-live="polite">Carrinho <span class="site-cart__count" id="cart-count">0</span></span>
         </nav>
       </header>
 
@@ -105,16 +106,19 @@
               <li>Ingrediente</li>
             </ul>
           </div>
-          <a class="order-link pizza-detail__order" href="#pedidos">
+          <button class="order-link pizza-detail__order pizza-detail__add" id="add-to-cart" type="button">
             <span class="order-link__button" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
-                <path d="M5 12h13M12 5l7 7-7 7" />
+                <path d="M3.5 4.5h2l2.1 10.1a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.4l1.3-6.3H7" />
+                <circle cx="10" cy="20" r="1" />
+                <circle cx="18" cy="20" r="1" />
               </svg>
             </span>
-            <span class="order-link__label">Pedir agora</span>
-          </a>
+            <span class="order-link__label">Adicionar ao carrinho</span>
+          </button>
         </aside>
       </section>
+      <p class="cart-feedback" id="cart-feedback" role="status" aria-live="polite"></p>
     </main>
       <script src="./js/pizza-wheel.js" defer></script>
   </body>
