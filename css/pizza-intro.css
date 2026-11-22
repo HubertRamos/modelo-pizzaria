@@ -540,3 +540,63 @@
     transition: none;
   }
 }
+
+
+/* Ação de adicionar ao carrinho e confirmação discreta. */
+.pizza-detail__add {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.pizza-detail__add .order-link__button svg {
+  width: 1.3rem;
+}
+
+.pizza-detail__add.is-added .order-link__button {
+  background: #f29648;
+  transform: scale(0.94);
+}
+
+.cart-feedback {
+  position: fixed;
+  z-index: 20;
+  right: var(--page-gutter);
+  bottom: 1.5rem;
+  max-width: min(24rem, calc(100vw - 2 * var(--page-gutter)));
+  padding: 0.9rem 1.2rem;
+  border: 1px solid rgb(233 130 50 / 35%);
+  border-radius: 999px;
+  background: rgb(29 29 29 / 94%);
+  box-shadow: 0 0.8rem 2.5rem rgb(0 0 0 / 28%);
+  color: var(--color-text);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.6rem);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+  pointer-events: none;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.cart-feedback.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 560px) {
+  .site-cart {
+    font-size: 0.68rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-feedback {
+    transition: none;
+  }
+}
