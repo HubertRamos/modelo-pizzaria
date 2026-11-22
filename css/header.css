@@ -83,3 +83,27 @@
     font-size: 0.7rem;
   }
 }
+
+
+.site-cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--color-text, #f1f0ed);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.site-cart__count {
+  display: inline-grid;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  padding-inline: 0.35rem;
+  place-items: center;
+  border: 1px solid rgb(233 130 50 / 55%);
+  border-radius: 999px;
+  color: #f2a05b;
+  font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
+}
