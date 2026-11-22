@@ -1,5 +1,6 @@
 (async () => {
-  const catalog = await window.RUOTA.catalogReady;
+  const catalog = await window.RUOTA.catalogReady.catch(error => { console.error(error); return null; });
+  if (!catalog) return;
   const wheel = document.querySelector(".pizza-wheel");
   if (!wheel) return;
 
@@ -8,7 +9,7 @@
   const featuredPizzas = allPizzas.filter(product => product.featured);
   const wheelProducts = [...featuredPizzas, ...allPizzas.filter(product => !product.featured)].slice(0, slots.length);
   const positionClasses = ["pizza-wheel__item--top", "pizza-wheel__item--upper-right", "pizza-wheel__item--lower-right", "pizza-wheel__item--lower-left", "pizza-wheel__item--upper-left"];
-  const positionOrder = wheelProducts.length === 2 ? [1, 3] : wheelProducts.length === 3 ? [0, 2, 4] : positionClasses.map((_, index) => index);
+  const positionOrder = wheelProducts.length === 2 ? [3, 1] : wheelProducts.length === 3 ? [0, 2, 4] : positionClasses.map((_, index) => index);
   slots.forEach((item, index) => {
     const product = wheelProducts[index];
     if (!product) { item.remove(); return; }
