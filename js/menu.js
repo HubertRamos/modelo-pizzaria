@@ -37,6 +37,7 @@
   const fieldset=(heading)=>{const field=document.createElement("fieldset");field.className="pizza-customization__group";const legend=document.createElement("legend");legend.textContent=heading;field.append(legend);return field};
   const optionLabel=(text,control,detail)=>{const label=document.createElement("label");label.className="pizza-customization__option";const span=document.createElement("span");span.textContent=text;label.append(control,span);if(detail){const small=document.createElement("small");small.textContent=detail;label.append(small)}return label};
   const makeSelect=(items,value,onChange)=>{const select=document.createElement("select");select.className="pizza-customization__select";items.forEach(item=>{const option=document.createElement("option");option.value=item.value;option.textContent=item.label;select.append(option)});select.value=value;select.addEventListener("change",onChange);return select};
+  const makePills=(items,value,onChange)=>{const group=document.createElement("div");group.className="pizza-customization__pills";group.setAttribute("role","group");items.forEach(item=>{const button=document.createElement("button");button.type="button";button.className="pizza-customization__pill";button.textContent=item.label;button.setAttribute("aria-pressed",String(item.value===value));button.addEventListener("click",()=>{group.querySelectorAll("button").forEach(node=>node.setAttribute("aria-pressed","false"));button.setAttribute("aria-pressed","true");onChange(item.value)});group.append(button)});return group};
   const calcPrice=()=>{
     const config=currentProduct?.customization||{},size=(config.sizes||[]).find(item=>item.id===selection.sizeId);
     let base=Number(size?.price??currentProduct?.price??0);
@@ -51,7 +52,7 @@
     options.replaceChildren();const config=currentProduct?.customization;
     if(!config?.enabled){options.hidden=true;return}options.hidden=false;
     if(config.sizes?.length){
-      const group=fieldset("Tamanho");const select=makeSelect(config.sizes.map(item=>({value:item.id,label:item.name+(item.slices?" · "+item.slices+" fatias":"")+" — "+money(item.price)})),selection.sizeId,value=>{selection.sizeId=value;refreshPrice()});group.append(select);options.append(group);
+      const group=fieldset("Tamanho");const pills=makePills(config.sizes.map(item=>({value:item.id,label:item.name})),selection.sizeId,value=>{selection.sizeId=value;refreshPrice()});group.append(pills);const chosen=config.sizes.find(item=>item.id===selection.sizeId);if(chosen){const note=document.createElement("small");note.className="pizza-customization__size-note";note.textContent=(chosen.slices?chosen.slices+" fatias · ":"")+money(chosen.price);group.append(note)}options.append(group);
     }
     if(config.halfAndHalf?.enabled){
       const group=fieldset("Segundo sabor · opcional");const flavors=catalog.products.filter(item=>item.categoryId==="pizzas"&&item.available!==false&&item.id!==currentProduct.id);
@@ -65,8 +66,8 @@
     }
   };
   const refreshPrice=()=>{const total=calcPrice();price.textContent=money(total);add.dataset.unitPrice=String(total)};
-  const openCustomization=product=>{
-    currentProduct=product;selection={sizeId:product.customization?.sizes?.[0]?.id||null,secondFlavorId:"",toppingIds:[],removedIngredients:[]};
+  const openCustomization=(product,initialSelection={})=>{
+    currentProduct=product;selection={sizeId:initialSelection.sizeId||product.customization?.sizes?.[0]?.id||null,secondFlavorId:initialSelection.secondFlavorId||"",toppingIds:[],removedIngredients:[]};
     title.textContent=product.name;description.textContent=product.description||"Uma opção especial do nosso cardápio.";description.classList.remove("is-expanded");
     const long=description.textContent.length>220;descriptionToggle.hidden=!long;descriptionToggle.textContent="Ler descrição completa";descriptionToggle.setAttribute("aria-expanded","false");
     const list=Array.isArray(product.ingredients)?product.ingredients:[];ingredientsTitle.hidden=!list.length;ingredients.hidden=!list.length;ingredients.replaceChildren();list.forEach(name=>{const li=document.createElement("li");li.textContent=name;ingredients.append(li)});
