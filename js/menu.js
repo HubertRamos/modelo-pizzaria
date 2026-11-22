@@ -14,7 +14,7 @@
       const cart = JSON.parse(localStorage.getItem("ruota-cart") || "[]");
       const existing = cart.find(item => item.id === product.id);
       if (existing) existing.quantity = (Number(existing.quantity) || 0) + 1;
-      else cart.push({ id: product.id, name: product.name, price: product.price, quantity: 1 });
+      else cart.push({ id: product.id, quantity: 1 });
       localStorage.setItem("ruota-cart", JSON.stringify(cart));
       window.dispatchEvent(new CustomEvent("ruota:cart-updated"));
       const feedback = document.querySelector("#cart-feedback");
