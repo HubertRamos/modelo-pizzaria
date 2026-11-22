@@ -607,3 +607,18 @@
 .pizza-wheel__item img{display:block;width:100%;height:100%;border-radius:inherit;object-fit:cover}
 .pizza-wheel__item span{display:grid;width:100%;height:100%;place-items:center;padding:1rem;color:var(--color-text);font-family:var(--font-display);font-size:clamp(.8rem,1.5vw,1.15rem);line-height:1.1;text-align:center}
 .pizza-wheel__item:disabled{cursor:not-allowed;opacity:.5}
+
+
+/* Personalização de pizzas — mantém a linguagem visual do RUOTA. */
+.pizza-customization{display:grid;gap:1rem;margin:1.2rem 0}
+.pizza-customization__group{display:grid;gap:.65rem;min-width:0;margin:0;border:0;border-top:1px solid rgb(241 240 237 / 12%);padding:.8rem 0 0}
+.pizza-customization__group legend{padding:0 .5rem 0 0;color:rgb(241 240 237 / 88%);font:600 .72rem var(--font-ui);letter-spacing:.08em;text-transform:uppercase}
+.pizza-customization__select{width:100%;border:1px solid rgb(241 240 237 / 20%);border-radius:.65rem;padding:.75rem .85rem;background:#292929;color:var(--color-text);font: .82rem var(--font-ui)}
+.pizza-customization__option{display:flex;align-items:center;gap:.65rem;color:rgb(241 240 237 / 82%);font:.78rem var(--font-ui)}
+.pizza-customization__option input{accent-color:#e98232}
+.pizza-customization__option small,.pizza-customization__group>small{margin-left:auto;color:rgb(241 240 237 / 52%);font:.68rem var(--font-ui)}
+.pizza-detail__description{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;max-height:9em;transition:max-height .38s cubic-bezier(.2,.75,.25,1)}
+.pizza-detail__description.is-expanded{display:block;-webkit-line-clamp:unset;max-height:40rem;overflow:auto;scrollbar-width:thin}
+.pizza-detail__description-toggle{display:inline-block;margin:.65rem 0 0;border:0;padding:.2rem 0;background:transparent;color:#e99a48;font:600 .74rem var(--font-ui);text-decoration:underline;text-underline-offset:.2em;cursor:pointer}
+.pizza-detail__description-toggle[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){.pizza-detail__description{transition:none}}
