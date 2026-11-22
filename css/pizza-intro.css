@@ -145,8 +145,8 @@
 .pizza-wheel {
   position: absolute;
   top: 50%;
-  right: -17%;
-  width: clamp(32rem, 57vw, 52rem);
+  right: -22%;
+  width: clamp(40rem, 72vw, 66rem);
   aspect-ratio: 1;
   border: 1px solid rgb(241 240 237 / 18%);
   border-radius: 50%;
@@ -169,7 +169,7 @@
 .pizza-wheel__item {
   position: absolute;
   display: block;
-  width: clamp(5.2rem, 10vw, 8.5rem);
+  width: clamp(6.5rem, 12vw, 10rem);
   aspect-ratio: 1;
   border: 1px solid rgb(241 240 237 / 32%);
   border-radius: 50%;
@@ -216,12 +216,12 @@
 
   .pizza-wheel {
     top: 58%;
-    right: -38%;
-    width: min(112vw, 43rem);
+    right: -48%;
+    width: min(132vw, 50rem);
   }
 
   .pizza-wheel__item {
-    width: clamp(4.2rem, 16vw, 6.5rem);
+    width: clamp(5rem, 19vw, 7.5rem);
   }
 }
 
@@ -236,7 +236,7 @@
 
   .pizza-wheel {
     top: 58%;
-    right: -57%;
-    width: 125vw;
+    right: -68%;
+    width: 145vw;
   }
 }
