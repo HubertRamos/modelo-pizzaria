@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "id": "pizzas",
+      "name": "Pizzas",
+      "description": "Receitas para compartilhar.",
+      "order": 1
+    },
+    {
+      "id": "bebidas",
+      "name": "Bebidas",
+      "description": "Para acompanhar seu pedido.",
+      "order": 2
+    },
+    {
+      "id": "sobremesas",
+      "name": "Sobremesas",
+      "description": "Um final especial.",
+      "order": 3
+    }
+  ],
+  "products": [
+    {
+      "id": "pizza-margherita",
+      "categoryId": "pizzas",
+      "name": "Margherita",
+      "description": "Molho de tomate, muçarela, tomate fresco e manjericão.",
+      "price": 42.9,
+      "image": "",
+      "featured": true,
+      "available": true,
+      "ingredients": [
+        "Molho de tomate",
+        "Muçarela",
+        "Tomate",
+        "Manjericão"
+      ]
+    },
+    {
+      "id": "pizza-calabresa",
+      "categoryId": "pizzas",
+      "name": "Calabresa",
+      "description": "Calabresa fatiada, cebola e muçarela.",
+      "price": 44.9,
+      "image": "",
+      "featured": false,
+      "available": true,
+      "ingredients": [
+        "Molho de tomate",
+        "Muçarela",
+        "Calabresa",
+        "Cebola"
+      ]
+    },
+    {
+      "id": "bebida-refrigerante",
+      "categoryId": "bebidas",
+      "name": "Refrigerante",
+      "description": "Lata 350 ml.",
+      "price": 7.5,
+      "image": "",
+      "featured": false,
+      "available": true,
+      "ingredients": []
+    },
+    {
+      "id": "sobremesa-brownie",
+      "categoryId": "sobremesas",
+      "name": "Brownie",
+      "description": "Brownie de chocolate.",
+      "price": 12,
+      "image": "",
+      "featured": false,
+      "available": true,
+      "ingredients": []
+    }
+  ]
+}
