@@ -1,7 +1,7 @@
 (() => {
   const modal=document.querySelector("#checkout-modal"),backdrop=document.querySelector("#checkout-backdrop"),form=document.querySelector("#checkout-form"),closeButton=document.querySelector("#checkout-close"),deliveryFields=document.querySelector("#delivery-fields"),cashFields=document.querySelector("#cash-fields"),error=document.querySelector("#checkout-error"),review=document.querySelector("#checkout-review"),reviewText=document.querySelector("#checkout-review-text"),editButton=document.querySelector("#checkout-edit"),checkoutButton=document.querySelector("#cart-checkout");
   if(!modal||!form)return;
-  const readCart=()=>{try{const data=JSON.parse(localStorage.getItem("ruota-cart")||"[]");return Array.isArray(data)?data:[]}catch{return[]}};
+  const readCart=()=>{try{const data=JSON.parse(localStorage.getItem("ruota-cart")||"[]");return Array.isArray(data)?data.map(item=>({...((window.RUOTA?.catalog?.products||[]).find(product=>product.id===item.id)||item),quantity:item.quantity})):[]}catch{return[]}};
   const parsePrice=value=>{const text=String(value??"").replace(/R\$/i,"").trim().replace(/\./g,"").replace(",",".");if(!/^[0-9]+(\.\d{1,2})?$/.test(text))return null;const number=Number(text);return Number.isFinite(number)&&number>0?number:null};
   const currency=value=>value.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
   const formValue=name=>String(new FormData(form).get(name)||"").trim();
