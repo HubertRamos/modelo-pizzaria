@@ -39,3 +39,7 @@ body.menu-detail-open{overflow:hidden}
   .menu-detail-dialog{grid-template-rows:auto minmax(0,1fr)}
   .menu-detail-dialog__content{max-height:calc(100dvh - 14rem);padding:1.4rem;overflow-y:auto}
 }
+
+
+/* Mantém os cards compactos; a descrição completa fica na ficha do produto. */
+.menu-product__description{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
