@@ -51,6 +51,10 @@
     detailDescriptionToggle.setAttribute("aria-expanded", String(expanded));
   });
   const detailIngredients = document.querySelector("#pizza-detail-ingredients");
+  const detailSizeOptions=document.createElement("div");detailSizeOptions.className="pizza-detail__sizes";detailSizeOptions.setAttribute("aria-label","Escolha o tamanho");
+  const detailSizeLabel=document.createElement("p");detailSizeLabel.className="pizza-detail__sizes-label";detailSizeLabel.textContent="ESCOLHA O TAMANHO";
+  detailPrice?.parentElement?.after(detailSizeLabel,detailSizeOptions);
+  let selectedWheelSizeId=null;
   const formatMoney = value => window.RUOTA.formatMoney(value);
   const fillIngredients = (list, ingredients) => {
     if (!list) return;
@@ -120,7 +124,7 @@
 
   const addSelectedPizzaToCart = () => {
     const product = wheelProducts[activeIndex];
-    if (product && window.RUOTA?.openCustomization) { window.RUOTA.openCustomization(product); return; }
+    if (product && window.RUOTA?.openCustomization) { window.RUOTA.openCustomization(product,{sizeId:selectedWheelSizeId}); return; }
     if (!product || !Number.isFinite(Number(product.price)) || Number(product.price) < 0) return;
     const cart = readCart();
     const existing = cart.find(item => item.id === product.id);
@@ -235,7 +239,8 @@
     if (!product) return;
     const name = product.name;
     if (detailTitle) detailTitle.textContent = name;
-    if (detailPrice) detailPrice.textContent = Number.isFinite(Number(product.price)) ? formatMoney(product.price).replace("R$", "").trim() : "A definir";
+    const sizes=product.customization?.sizes||[];selectedWheelSizeId=sizes[0]?.id||null;detailSizeOptions.replaceChildren();detailSizeLabel.hidden=!sizes.length;if(sizes.length){sizes.forEach(size=>{const pill=document.createElement("button");pill.type="button";pill.className="pizza-detail__size-pill";pill.textContent=size.name;pill.setAttribute("aria-pressed",String(size.id===selectedWheelSizeId));pill.addEventListener("click",()=>{selectedWheelSizeId=size.id;detailSizeOptions.querySelectorAll("button").forEach(node=>node.setAttribute("aria-pressed",String(node===pill)));if(detailPrice)detailPrice.textContent=formatMoney(size.price).replace("R$","").trim()});detailSizeOptions.append(pill)})}
+    if (detailPrice) detailPrice.textContent = Number.isFinite(Number(sizes.find(size=>size.id===selectedWheelSizeId)?.price??product.price)) ? formatMoney(sizes.find(size=>size.id===selectedWheelSizeId)?.price??product.price).replace("R$", "").trim() : "A definir";
     if (detailDescription) {
       detailDescription.textContent = product.description || "";
       detailDescription.classList.remove("is-expanded");
