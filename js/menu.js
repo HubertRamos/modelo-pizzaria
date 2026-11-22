@@ -58,6 +58,10 @@
   detailTitle.className = "menu-detail-dialog__title";
   const detailDescription = document.createElement("p");
   detailDescription.className = "menu-detail-dialog__description";
+  const descriptionToggle = document.createElement("button");
+  descriptionToggle.type = "button";
+  descriptionToggle.className = "menu-detail-dialog__description-toggle";
+  descriptionToggle.hidden = true;
   const ingredientsHeading = document.createElement("h3");
   ingredientsHeading.className = "menu-detail-dialog__ingredients-title";
   ingredientsHeading.textContent = "Ingredientes";
@@ -73,7 +77,7 @@
   detailAdd.textContent = "Adicionar ao carrinho";
 
   detailFooter.append(detailPrice, detailAdd);
-  detailContent.append(detailEyebrow, detailTitle, detailDescription, ingredientsHeading, ingredientsList, detailFooter);
+  detailContent.append(detailEyebrow, detailTitle, detailDescription, descriptionToggle, ingredientsHeading, ingredientsList, detailFooter);
   detailsDialog.append(closeButton, detailImage, detailContent);
   document.body.append(detailsBackdrop, detailsDialog);
 
@@ -104,6 +108,13 @@
 
     detailTitle.textContent = product.name;
     detailDescription.textContent = product.description || "Uma opção especial do nosso cardápio.";
+    detailDescription.classList.remove("is-expanded");
+    const hasLongDescription = detailDescription.textContent.length > 220;
+    descriptionToggle.hidden = !hasLongDescription;
+    descriptionToggle.textContent = "Ler descrição completa";
+    descriptionToggle.setAttribute("aria-expanded", "false");
+    descriptionToggle.setAttribute("aria-controls", "menu-detail-description");
+    detailDescription.id = "menu-detail-description";
     ingredientsList.replaceChildren();
     const ingredients = Array.isArray(product.ingredients) ? product.ingredients : [];
     ingredientsHeading.hidden = ingredients.length === 0;
@@ -129,6 +140,12 @@
       closeButton.focus();
     });
   };
+
+  descriptionToggle.addEventListener("click", () => {
+    const expanded = detailDescription.classList.toggle("is-expanded");
+    descriptionToggle.textContent = expanded ? "Mostrar menos" : "Ler descrição completa";
+    descriptionToggle.setAttribute("aria-expanded", String(expanded));
+  });
 
   closeButton.addEventListener("click", closeDetails);
   detailsBackdrop.addEventListener("click", closeDetails);
