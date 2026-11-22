@@ -14,43 +14,54 @@
 
   const normalizeAngle = (angle) => ((angle + 180) % 360 + 360) % 360 - 180;
 
-  const pointerAngle = (event) => {
+  const wheelCenter = () => {
     const bounds = wheel.getBoundingClientRect();
-    const centerX = bounds.left + bounds.width / 2;
-    const centerY = bounds.top + bounds.height / 2;
-    return Math.atan2(event.clientY - centerY, event.clientX - centerX) * 180 / Math.PI;
+    return {
+      x: bounds.left + bounds.width / 2,
+      y: bounds.top + bounds.height / 2
+    };
+  };
+
+  const pointerAngle = (event) => {
+    const center = wheelCenter();
+    return Math.atan2(event.clientY - center.y, event.clientX - center.x) * 180 / Math.PI;
+  };
+
+  const getItemAngle = (item) => {
+    const center = wheelCenter();
+    const bounds = item.getBoundingClientRect();
+    const x = bounds.left + bounds.width / 2;
+    const y = bounds.top + bounds.height / 2;
+    return Math.atan2(y - center.y, x - center.x) * 180 / Math.PI;
+  };
+
+  const setActiveItem = (index) => {
+    if (index === activeIndex) return;
+    activeIndex = index;
+
+    items.forEach((item, itemIndex) => {
+      item.classList.toggle("is-active", itemIndex === activeIndex);
+    });
+
+    if (status) {
+      status.textContent = `Pizza ${activeIndex + 1} em destaque, à direita.`;
+    }
   };
 
   const updateActiveItem = () => {
-    const wheelBounds = wheel.getBoundingClientRect();
-    const centerX = wheelBounds.left + wheelBounds.width / 2;
-    const centerY = wheelBounds.top + wheelBounds.height / 2;
     let closestIndex = 0;
     let smallestDistance = Infinity;
 
     items.forEach((item, index) => {
-      const bounds = item.getBoundingClientRect();
-      const itemX = bounds.left + bounds.width / 2;
-      const itemY = bounds.top + bounds.height / 2;
-      const angle = Math.atan2(itemY - centerY, itemX - centerX) * 180 / Math.PI;
-      const distance = Math.abs(normalizeAngle(angle + 90));
-
+      const angle = getItemAngle(item);
+      const distance = Math.abs(normalizeAngle(angle));
       if (distance < smallestDistance) {
         smallestDistance = distance;
         closestIndex = index;
       }
     });
 
-    if (closestIndex === activeIndex) return;
-    activeIndex = closestIndex;
-
-    items.forEach((item, index) => {
-      item.classList.toggle("is-active", index === activeIndex);
-    });
-
-    if (status) {
-      status.textContent = `Pizza ${activeIndex + 1} em destaque.`;
-    }
+    setActiveItem(closestIndex);
   };
 
   const setRotation = (nextRotation) => {
@@ -59,8 +70,35 @@
     updateActiveItem();
   };
 
+  const snapToRight = () => {
+    let closestIndex = 0;
+    let closestAngle = 0;
+    let smallestDistance = Infinity;
+
+    items.forEach((item, index) => {
+      const angle = normalizeAngle(getItemAngle(item));
+      const distance = Math.abs(angle);
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        closestIndex = index;
+        closestAngle = angle;
+      }
+    });
+
+    wheel.classList.add("is-snapping");
+    setActiveItem(closestIndex);
+    setRotation(rotation - closestAngle);
+  };
+
+  wheel.addEventListener("transitionend", (event) => {
+    if (event.propertyName !== "transform") return;
+    wheel.classList.remove("is-snapping");
+    updateActiveItem();
+  });
+
   wheel.addEventListener("pointerdown", (event) => {
     if (event.button !== 0 || activePointerId !== null) return;
+    wheel.classList.remove("is-snapping");
     activePointerId = event.pointerId;
     dragStartAngle = pointerAngle(event);
     dragStartRotation = rotation;
@@ -80,6 +118,7 @@
       wheel.releasePointerCapture(event.pointerId);
     }
     activePointerId = null;
+    snapToRight();
   };
 
   wheel.addEventListener("pointerup", finishDrag);
@@ -91,10 +130,13 @@
   wheel.addEventListener("keydown", (event) => {
     if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
       event.preventDefault();
+      wheel.classList.remove("is-snapping");
       setRotation(rotation + (event.key === "ArrowRight" ? 15 : -15));
+      snapToRight();
     }
   });
 
   window.addEventListener("resize", updateActiveItem);
   setRotation(0);
+  snapToRight();
 })();
