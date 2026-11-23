@@ -100,6 +100,7 @@
   let activeIndex = -1;
   const mobileMode = window.matchMedia('(max-width: 760px)');
   let mobilePointerStart = null;
+  let mobileGestureMoved = false;
   let mobileNav = null;
   const createMobileNav = () => {
     if (mobileNav || !wheel.parentElement) return;
@@ -407,6 +408,11 @@
   items.forEach((item, index) => {
     item.addEventListener("click", (event) => {
       event.stopPropagation();
+      if (mobileMode.matches && mobileGestureMoved) {
+        event.preventDefault();
+        mobileGestureMoved = false;
+        return;
+      }
       const angle = getItemAngle(item);
       const correction = normalizeAngle(SELECT_ANGLE - angle);
       wheel.classList.add("is-snapping");
@@ -442,7 +448,11 @@
   wheel.addEventListener("pointerdown", (event) => {
     if (mobileMode.matches) {
       if (event.target.closest(".pizza-mobile-nav button")) return;
-      mobilePointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY }; return;
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      mobileGestureMoved = false;
+      mobilePointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
+      try { wheel.setPointerCapture(event.pointerId); } catch {}
+      return;
     }
     if (event.target.closest("[data-wheel-item]")) return;
     if (event.button !== 0 || activePointerId !== null) return;
@@ -457,9 +467,16 @@
   const finishDrag = (event) => {
     if (mobileMode.matches) {
       if (!mobilePointerStart || event.pointerId !== mobilePointerStart.id) return;
-      const dx = event.clientX - mobilePointerStart.x; const dy = event.clientY - mobilePointerStart.y;
+      const dx = event.clientX - mobilePointerStart.x;
+      const dy = event.clientY - mobilePointerStart.y;
+      const wasHorizontalSwipe = Math.abs(dx) > 32 && Math.abs(dx) > Math.abs(dy) * 1.1;
       mobilePointerStart = null;
-      if (Math.abs(dx) > 38 && Math.abs(dx) > Math.abs(dy) * 1.15) moveMobile(dx < 0 ? 1 : -1);
+      if (wheel.hasPointerCapture(event.pointerId)) wheel.releasePointerCapture(event.pointerId);
+      if (wasHorizontalSwipe) {
+        mobileGestureMoved = true;
+        moveMobile(dx < 0 ? 1 : -1);
+        window.setTimeout(() => { mobileGestureMoved = false; }, 450);
+      }
       return;
     }
     if (event.pointerId !== activePointerId) return;
