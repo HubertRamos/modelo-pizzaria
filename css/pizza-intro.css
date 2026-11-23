@@ -625,3 +625,7 @@
 
 /* Tamanhos compactos no detalhe da roda; personalização completa fica no cardápio. */
 .pizza-detail__sizes{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0 0}.pizza-detail__sizes-label{margin:1.15rem 0 0;color:rgb(241 240 237 / 55%);font:600 .6rem var(--font-ui);letter-spacing:.16em}.pizza-detail__sizes-label[hidden]{display:none}.pizza-detail__size-pill{padding:.55rem .9rem;font-size:.7rem}.pizza-detail__order{margin-top:1.35rem}
+
+/* Duas ações independentes no detalhe da roda. */
+.pizza-detail__actions{display:flex;align-items:center;flex-wrap:wrap;gap:.9rem;margin-top:1.35rem}.pizza-detail__actions .pizza-detail__order{margin-top:0}.pizza-detail__customize{border:1px solid rgb(241 240 237 / 25%);border-radius:999px;padding:.8rem 1.1rem;background:transparent;color:var(--color-text);font:600 .74rem var(--font-ui);cursor:pointer;transition:border-color .2s,background .2s}.pizza-detail__customize:hover{border-color:#e98232;background:rgb(233 130 50 / 10%)}.pizza-detail__customize:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:760px){.pizza-detail__actions{gap:.65rem}.pizza-detail__actions .pizza-detail__order{margin-top:0}}
