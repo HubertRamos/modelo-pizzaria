@@ -670,6 +670,19 @@
     touch-action: pan-y;
   }
 
+  /* Mantém o gesto horizontal disponível mesmo quando começa sobre a pizza. */
+  .pizza-wheel__item {
+    touch-action: pan-y;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .pizza-wheel__item img {
+    pointer-events: none;
+    -webkit-user-drag: none;
+  }
+
   .pizza-wheel__track { display: none; }
 
   .pizza-wheel__item {
