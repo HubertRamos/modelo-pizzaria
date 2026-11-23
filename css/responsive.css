@@ -131,14 +131,14 @@
 
   .pizza-featured {
     top: auto;
-    bottom: clamp(9rem, 25vw, 12rem);
+    bottom: calc((clamp(18rem, 82vw, 25rem) - clamp(9rem, 38vw, 13rem)) / 2);
     left: 50%;
     width: clamp(9rem, 38vw, 13rem);
-    transform: translate(-50%, 50%) scale(.92);
+    transform: translate(-50%, 0) scale(.92);
   }
 
   .pizza-intro.has-details .pizza-featured {
-    transform: translate(-50%, 50%) scale(1);
+    transform: translate(-50%, 0) scale(1);
   }
 
   .pizza-intro.has-details .pizza-detail {
@@ -505,6 +505,10 @@
 @media (max-height: 680px) and (max-width: 760px) {
   .pizza-intro__visual {
     height: 17rem;
+  }
+
+  .pizza-featured {
+    bottom: calc((17rem - clamp(9rem, 38vw, 13rem)) / 2);
   }
 
   .pizza-detail {
