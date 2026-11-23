@@ -22,7 +22,6 @@
   .pizza-intro.motion-ready .pizza-wheel__item{
     opacity:0;
     filter:blur(8px);
-    scale:.78;
     animation:wheel-item-arrive .9s cubic-bezier(.16,.82,.22,1) both;
   }
   .pizza-intro.motion-ready .pizza-wheel__item:nth-of-type(2){animation-delay:.2s}
@@ -31,7 +30,7 @@
   .pizza-intro.motion-ready .pizza-wheel__item:nth-of-type(5){animation-delay:.56s}
   .pizza-intro.motion-ready .pizza-wheel__item:nth-of-type(6){animation-delay:.68s}
   @keyframes hero-copy-arrive{to{opacity:1;transform:translateY(0)}}
-  @keyframes wheel-item-arrive{to{opacity:1;filter:blur(0);scale:1}}
+  @keyframes wheel-item-arrive{to{opacity:1;filter:blur(0)}}
 
   .starters-section.motion-ready .starters-section__heading,
   .starters-section.motion-ready .starters-section__link,
@@ -115,6 +114,6 @@
   .site-footer.motion-ready .site-footer__brand,
   .site-footer.motion-ready .site-footer__column,
   .site-footer.motion-ready .site-footer__bottom{
-    opacity:1!important;filter:none!important;clip-path:none!important;transform:none!important;scale:1!important;animation:none!important;transition:none!important;
+    opacity:1!important;filter:none!important;clip-path:none!important;transform:none!important;animation:none!important;transition:none!important;
   }
 }
