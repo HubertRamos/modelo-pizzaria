@@ -70,7 +70,7 @@
   const refreshPrice=()=>{const total=calcPrice();price.textContent=money(total);add.dataset.unitPrice=String(total)};
   const openCustomization=(product,initialSelection={})=>{
     currentProduct=product;selection={sizeId:initialSelection.sizeId||product.customization?.sizes?.[0]?.id||null,secondFlavorId:initialSelection.secondFlavorId||"",toppingIds:[],removedIngredients:[]};
-    title.textContent=product.name;description.textContent=product.description||"Uma opção especial do nosso cardápio.";description.classList.remove("is-expanded");
+    title.textContent=product.name||"Produto";description.textContent=(typeof product.description==="string"&&product.description.trim())?product.description.trim():((typeof product.shortDescription==="string"&&product.shortDescription.trim())?product.shortDescription.trim():"Descrição ainda não cadastrada.");description.classList.remove("is-expanded");
     const long=description.textContent.length>220;descriptionToggle.hidden=!long;descriptionToggle.textContent="Ler descrição completa";descriptionToggle.setAttribute("aria-expanded","false");
     const list=Array.isArray(product.ingredients)?product.ingredients:[];ingredientsTitle.hidden=!list.length;ingredients.hidden=!list.length;ingredients.replaceChildren();list.forEach(name=>{const li=document.createElement("li");li.textContent=name;ingredients.append(li)});
     image.replaceChildren();if(product.image){const img=document.createElement("img");img.src=product.image;img.alt=product.name;image.append(img)}else image.textContent="RUOTA";
