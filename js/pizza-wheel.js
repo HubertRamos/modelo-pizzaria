@@ -8,7 +8,7 @@
   const allPizzas = catalog.products.filter(product => product.categoryId === "pizzas" && product.available !== false);
   const featuredPizzas = allPizzas.filter(product => product.featured);
   const wheelProducts = [...featuredPizzas, ...allPizzas.filter(product => !product.featured)].slice(0, slots.length);
-  const positionClasses = ["pizza-wheel__item--top", "pizza-wheel__item--upper-right", "pizza-wheel__item--lower-right", "pizza-wheel__item--lower-left", "pizza-wheel__item--upper-left"];
+  const positionClasses = ["pizza-wheel__item--top", "pizza-wheel__item--upper-right", "pizza-wheel__item--right", "pizza-wheel__item--lower-right", "pizza-wheel__item--bottom", "pizza-wheel__item--lower-left", "pizza-wheel__item--left", "pizza-wheel__item--upper-left"];
   const positionOrder = wheelProducts.length === 2 ? [3, 1] : wheelProducts.length === 3 ? [0, 2, 4] : positionClasses.map((_, index) => index);
   slots.forEach((item, index) => {
     const product = wheelProducts[index];
