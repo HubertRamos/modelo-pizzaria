@@ -401,7 +401,7 @@
   wheel.addEventListener("animationend", () => wheel.classList.remove("is-mobile-next", "is-mobile-previous"));
   wheel.addEventListener("pointerdown", (event) => {
     if (mobileMode.matches) {
-      if (event.target.closest("button")) return;
+      if (event.target.closest(".pizza-mobile-nav button")) return;
       mobilePointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY }; return;
     }
     if (event.target.closest("[data-wheel-item]")) return;
