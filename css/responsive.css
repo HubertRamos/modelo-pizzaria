@@ -632,3 +632,221 @@
     animation: none !important;
   }
 }
+
+
+/* RUOTA mobile — a pizza becomes a cropped backdrop behind the copy. */
+@media (max-width: 760px) {
+  .pizza-intro {
+    position: relative;
+    display: block;
+    min-height: 42rem;
+    padding: 2.5rem var(--page-gutter) 4.5rem;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .pizza-intro__visual {
+    position: absolute;
+    z-index: 0;
+    inset: 0 auto 0 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    pointer-events: auto;
+  }
+
+  .pizza-wheel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    transform: none !important;
+    cursor: grab;
+    touch-action: pan-y;
+  }
+
+  .pizza-wheel__track { display: none; }
+
+  .pizza-wheel__item {
+    top: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: 5vw !important;
+    width: min(108vw, 31rem);
+    max-width: none;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: none;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(.9);
+    transition: opacity 220ms ease, transform 420ms cubic-bezier(.22, 1, .36, 1);
+    will-change: opacity, transform;
+  }
+
+  .pizza-wheel__item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+    border-radius: 50%;
+    filter: drop-shadow(0 1.2rem 1.5rem rgb(0 0 0 / 34%));
+  }
+
+  .pizza-wheel__item.is-active {
+    z-index: 2;
+    opacity: 1;
+    pointer-events: auto;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .pizza-wheel.is-mobile-next .pizza-wheel__item.is-active {
+    animation: ruota-pizza-enter-next 460ms cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .pizza-wheel.is-mobile-previous .pizza-wheel__item.is-active {
+    animation: ruota-pizza-enter-previous 460ms cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .pizza-wheel__item.is-mobile-leaving-next {
+    z-index: 1;
+    pointer-events: none;
+    animation: ruota-pizza-exit-next 360ms cubic-bezier(.4, 0, .7, .2) forwards;
+  }
+
+  .pizza-wheel__item.is-mobile-leaving-previous {
+    z-index: 1;
+    pointer-events: none;
+    animation: ruota-pizza-exit-previous 360ms cubic-bezier(.4, 0, .7, .2) forwards;
+  }
+
+  .pizza-intro__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 34rem;
+    padding-block: 1rem;
+    text-shadow: 0 1px 18px rgb(20 20 20 / 72%);
+  }
+
+  .pizza-intro__eyebrow,
+  .pizza-intro__title,
+  .pizza-intro__price,
+  .pizza-intro__description,
+  .pizza-ingredients__label,
+  .pizza-ingredients__list li,
+  .order-link {
+    position: relative;
+    z-index: 1;
+  }
+
+  .pizza-intro__title {
+    max-width: 10ch;
+    text-shadow: 0 2px 24px rgb(18 18 18 / 78%);
+  }
+
+  .pizza-intro__description {
+    max-width: 27rem;
+    text-shadow: 0 1px 16px rgb(18 18 18 / 92%);
+  }
+
+  .pizza-ingredients__list li {
+    background: rgb(35 35 35 / 58%);
+    backdrop-filter: blur(8px);
+    text-shadow: none;
+  }
+
+  .pizza-mobile-nav {
+    position: absolute;
+    z-index: 4;
+    right: var(--page-gutter);
+    bottom: .8rem;
+    left: var(--page-gutter);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    pointer-events: none;
+  }
+
+  .pizza-mobile-nav__arrow {
+    display: grid;
+    width: 2.65rem;
+    height: 2.65rem;
+    place-items: center;
+    border: 1px solid rgb(241 240 237 / 24%);
+    border-radius: 50%;
+    background: rgb(35 35 35 / 78%);
+    color: var(--color-text);
+    font-family: var(--font-ui);
+    font-size: 1.7rem;
+    line-height: 1;
+    pointer-events: auto;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+  }
+
+  .pizza-mobile-nav__count {
+    min-width: 3.2rem;
+    color: rgb(241 240 237 / 76%);
+    font-family: var(--font-ui);
+    font-size: .7rem;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    text-shadow: 0 1px 8px #161616;
+  }
+
+  .pizza-intro.has-details .pizza-mobile-nav,
+  .pizza-intro.has-details .pizza-wheel {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .pizza-featured {
+    top: 1rem;
+    right: auto;
+    bottom: auto;
+    left: 5vw;
+    width: min(62vw, 15rem);
+    transform: translate(-50%, 0) scale(.94);
+  }
+
+  .pizza-intro.has-details .pizza-featured {
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@media (max-width: 420px) {
+  .pizza-intro {
+    min-height: 40rem;
+    padding-inline: 1rem;
+  }
+
+  .pizza-wheel__item { width: 112vw; }
+
+  .pizza-intro__title {
+    font-size: clamp(3rem, 13vw, 4rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pizza-wheel__item,
+  .pizza-wheel.is-mobile-next .pizza-wheel__item.is-active,
+  .pizza-wheel.is-mobile-previous .pizza-wheel__item.is-active,
+  .pizza-wheel__item.is-mobile-leaving-next,
+  .pizza-wheel__item.is-mobile-leaving-previous {
+    animation: none !important;
+    transition: none !important;
+  }
+}
