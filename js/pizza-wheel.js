@@ -98,6 +98,20 @@
   let dragStartRotation = 0;
   let activePointerId = null;
   let activeIndex = -1;
+  const mobileMode = window.matchMedia('(max-width: 760px)');
+  let mobilePointerStart = null;
+  let mobileNav = null;
+  if (mobileMode.matches) {
+    mobileNav = document.createElement('div'); mobileNav.className = 'pizza-mobile-nav';
+    mobileNav.setAttribute('aria-label', 'Navegar pelas pizzas');
+    const previous = document.createElement('button'); previous.type = 'button'; previous.className = 'pizza-mobile-nav__arrow';
+    previous.setAttribute('aria-label', 'Pizza anterior'); previous.textContent = '‹';
+    const counter = document.createElement('span'); counter.className = 'pizza-mobile-nav__count'; counter.setAttribute('aria-live', 'polite');
+    const next = document.createElement('button'); next.type = 'button'; next.className = 'pizza-mobile-nav__arrow';
+    next.setAttribute('aria-label', 'Próxima pizza'); next.textContent = '›';
+    mobileNav.append(previous, counter, next); wheel.parentElement.append(mobileNav); mobileNav._counter = counter;
+    previous.addEventListener('click', () => moveMobile(-1)); next.addEventListener('click', () => moveMobile(1));
+  }
 
   const readCart = () => {
     try {
@@ -189,9 +203,15 @@
       item.setAttribute("aria-pressed", String(active));
     });
 
-    if (status) {
-      status.textContent = `${items[activeIndex]?.dataset.pizzaName || `Pizza ${activeIndex + 1}`} em destaque, à esquerda.`;
-    }
+    if (status) status.textContent = (items[activeIndex]?.dataset.pizzaName || ('Pizza ' + (activeIndex + 1))) + ' em destaque.';
+    if (mobileNav && mobileNav._counter) mobileNav._counter.textContent = (activeIndex + 1) + ' / ' + items.length;
+  };
+
+  const moveMobile = (direction) => {
+    if (!mobileMode.matches || intro?.classList.contains('has-details')) return;
+    const nextIndex = (activeIndex + direction + items.length) % items.length;
+    wheel.classList.remove('is-mobile-next', 'is-mobile-previous'); void wheel.offsetWidth;
+    wheel.classList.add(direction > 0 ? 'is-mobile-next' : 'is-mobile-previous'); setActiveItem(nextIndex);
   };
 
   const animateTransfer = (source, destination, onFinish) => {
@@ -333,8 +353,8 @@
   };
 
   const updateActiveItem = () => {
-    const { index } = findClosestToSelectionPoint();
-    setActiveItem(index);
+    if (mobileMode.matches) return;
+    const { index } = findClosestToSelectionPoint(); setActiveItem(index);
   };
 
   const setRotation = (nextRotation) => {
@@ -376,36 +396,36 @@
 
   wheel.addEventListener("transitionend", (event) => {
     if (event.propertyName !== "transform") return;
-    wheel.classList.remove("is-snapping");
-    updateActiveItem();
+    wheel.classList.remove("is-snapping"); updateActiveItem();
   });
-
+  wheel.addEventListener("animationend", () => wheel.classList.remove("is-mobile-next", "is-mobile-previous"));
   wheel.addEventListener("pointerdown", (event) => {
+    if (mobileMode.matches) {
+      if (event.target.closest("button")) return;
+      mobilePointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY }; return;
+    }
     if (event.target.closest("[data-wheel-item]")) return;
     if (event.button !== 0 || activePointerId !== null) return;
-    wheel.classList.remove("is-snapping");
-    activePointerId = event.pointerId;
-    dragStartAngle = pointerAngle(event);
-    dragStartRotation = rotation;
-    wheel.setPointerCapture(event.pointerId);
-    event.preventDefault();
+    wheel.classList.remove("is-snapping"); activePointerId = event.pointerId;
+    dragStartAngle = pointerAngle(event); dragStartRotation = rotation;
+    wheel.setPointerCapture(event.pointerId); event.preventDefault();
   });
-
   wheel.addEventListener("pointermove", (event) => {
-    if (event.pointerId !== activePointerId) return;
-    const delta = normalizeAngle(pointerAngle(event) - dragStartAngle);
-    setRotation(dragStartRotation + delta);
+    if (mobileMode.matches || event.pointerId !== activePointerId) return;
+    const delta = normalizeAngle(pointerAngle(event) - dragStartAngle); setRotation(dragStartRotation + delta);
   });
-
   const finishDrag = (event) => {
-    if (event.pointerId !== activePointerId) return;
-    if (wheel.hasPointerCapture(event.pointerId)) {
-      wheel.releasePointerCapture(event.pointerId);
+    if (mobileMode.matches) {
+      if (!mobilePointerStart || event.pointerId !== mobilePointerStart.id) return;
+      const dx = event.clientX - mobilePointerStart.x; const dy = event.clientY - mobilePointerStart.y;
+      mobilePointerStart = null;
+      if (Math.abs(dx) > 38 && Math.abs(dx) > Math.abs(dy) * 1.15) moveMobile(dx < 0 ? 1 : -1);
+      return;
     }
-    activePointerId = null;
-    snapToSelectionPoint();
+    if (event.pointerId !== activePointerId) return;
+    if (wheel.hasPointerCapture(event.pointerId)) wheel.releasePointerCapture(event.pointerId);
+    activePointerId = null; snapToSelectionPoint();
   };
-
   wheel.addEventListener("pointerup", finishDrag);
   wheel.addEventListener("pointercancel", finishDrag);
   wheel.addEventListener("lostpointercapture", () => {
@@ -413,15 +433,16 @@
   });
 
   wheel.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-      event.preventDefault();
-      wheel.classList.remove("is-snapping");
-      setRotation(rotation + (event.key === "ArrowRight" ? 15 : -15));
-      snapToSelectionPoint();
-    }
+    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+    event.preventDefault();
+    if (mobileMode.matches) { moveMobile(event.key === "ArrowRight" ? 1 : -1); return; }
+    wheel.classList.remove("is-snapping");
+    setRotation(rotation + (event.key === "ArrowRight" ? 15 : -15)); snapToSelectionPoint();
   });
-
-  window.addEventListener("resize", updateActiveItem);
-  setRotation(0);
-  snapToSelectionPoint();
+  window.addEventListener("resize", () => {
+    if (mobileMode.matches) { wheel.style.setProperty("--wheel-rotation", "0deg"); setActiveItem(Math.max(0, activeIndex)); }
+    else { if (mobileNav) mobileNav.remove(); mobileNav = null; updateActiveItem(); }
+  });
+  if (mobileMode.matches) { wheel.style.setProperty("--wheel-rotation", "0deg"); setActiveItem(0); }
+  else { setRotation(0); snapToSelectionPoint(); }
 })();
