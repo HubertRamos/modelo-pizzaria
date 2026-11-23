@@ -101,17 +101,36 @@
   const mobileMode = window.matchMedia('(max-width: 760px)');
   let mobilePointerStart = null;
   let mobileNav = null;
-  if (mobileMode.matches) {
-    mobileNav = document.createElement('div'); mobileNav.className = 'pizza-mobile-nav';
+  const createMobileNav = () => {
+    if (mobileNav || !wheel.parentElement) return;
+    mobileNav = document.createElement('div');
+    mobileNav.className = 'pizza-mobile-nav';
     mobileNav.setAttribute('aria-label', 'Navegar pelas pizzas');
-    const previous = document.createElement('button'); previous.type = 'button'; previous.className = 'pizza-mobile-nav__arrow';
-    previous.setAttribute('aria-label', 'Pizza anterior'); previous.textContent = '‹';
-    const counter = document.createElement('span'); counter.className = 'pizza-mobile-nav__count'; counter.setAttribute('aria-live', 'polite');
-    const next = document.createElement('button'); next.type = 'button'; next.className = 'pizza-mobile-nav__arrow';
-    next.setAttribute('aria-label', 'Próxima pizza'); next.textContent = '›';
-    mobileNav.append(previous, counter, next); wheel.parentElement.append(mobileNav); mobileNav._counter = counter;
-    previous.addEventListener('click', () => moveMobile(-1)); next.addEventListener('click', () => moveMobile(1));
-  }
+
+    const previous = document.createElement('button');
+    previous.type = 'button';
+    previous.className = 'pizza-mobile-nav__arrow';
+    previous.setAttribute('aria-label', 'Pizza anterior');
+    previous.textContent = '‹';
+
+    const counter = document.createElement('span');
+    counter.className = 'pizza-mobile-nav__count';
+    counter.setAttribute('aria-live', 'polite');
+
+    const next = document.createElement('button');
+    next.type = 'button';
+    next.className = 'pizza-mobile-nav__arrow';
+    next.setAttribute('aria-label', 'Próxima pizza');
+    next.textContent = '›';
+
+    mobileNav.append(previous, counter, next);
+    wheel.parentElement.append(mobileNav);
+    mobileNav._counter = counter;
+    previous.addEventListener('click', () => moveMobile(-1));
+    next.addEventListener('click', () => moveMobile(1));
+  };
+
+  if (mobileMode.matches) createMobileNav();
 
   const readCart = () => {
     try {
@@ -439,10 +458,21 @@
     wheel.classList.remove("is-snapping");
     setRotation(rotation + (event.key === "ArrowRight" ? 15 : -15)); snapToSelectionPoint();
   });
-  window.addEventListener("resize", () => {
-    if (mobileMode.matches) { wheel.style.setProperty("--wheel-rotation", "0deg"); setActiveItem(Math.max(0, activeIndex)); }
-    else { if (mobileNav) mobileNav.remove(); mobileNav = null; updateActiveItem(); }
-  });
+  const syncPresentationMode = () => {
+    if (mobileMode.matches) {
+      createMobileNav();
+      wheel.style.setProperty("--wheel-rotation", "0deg");
+      setActiveItem(Math.max(0, activeIndex));
+    } else {
+      mobileNav?.remove();
+      mobileNav = null;
+      wheel.classList.remove("is-mobile-next", "is-mobile-previous");
+      updateActiveItem();
+    }
+  };
+
+  mobileMode.addEventListener?.("change", syncPresentationMode);
+  window.addEventListener("resize", syncPresentationMode);
   if (mobileMode.matches) { wheel.style.setProperty("--wheel-rotation", "0deg"); setActiveItem(0); }
   else { setRotation(0); snapToSelectionPoint(); }
 })();
