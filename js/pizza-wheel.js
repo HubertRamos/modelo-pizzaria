@@ -451,7 +451,8 @@
       if (event.pointerType === "mouse" && event.button !== 0) return;
       mobileGestureMoved = false;
       mobilePointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
-      try { wheel.setPointerCapture(event.pointerId); } catch {}
+      const captureTarget = event.target.closest("[data-wheel-item]") || wheel;
+      try { captureTarget.setPointerCapture(event.pointerId); } catch {}
       return;
     }
     if (event.target.closest("[data-wheel-item]")) return;
