@@ -1,0 +1,526 @@
+/* RUOTA — experiência mobile e telas compactas.
+   Mantém a composição desktop intacta e reorganiza o conteúdo em telas estreitas. */
+
+@media (max-width: 760px) {
+  .site-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem var(--page-gutter);
+  }
+
+  .brand {
+    flex-direction: row;
+    align-items: baseline;
+    gap: .5rem;
+    min-width: 0;
+  }
+
+  .brand__name {
+    font-size: 1.2rem;
+  }
+
+  .brand__descriptor {
+    font-size: .52rem;
+  }
+
+  .site-nav {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .8rem;
+    width: 100%;
+    padding-top: .8rem;
+    border-top: 1px solid rgb(255 255 255 / 8%);
+  }
+
+  .site-nav__link,
+  .site-cart {
+    font-size: .74rem;
+  }
+
+  .pizza-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: auto;
+    padding: clamp(2.4rem, 8vw, 3.5rem) var(--page-gutter) 0;
+  }
+
+  .pizza-intro__content {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 38rem;
+    padding-block: 0;
+  }
+
+  .pizza-intro__eyebrow,
+  .pizza-ingredients__label {
+    font-size: .58rem;
+    letter-spacing: .17em;
+  }
+
+  .pizza-intro__title {
+    max-width: 12ch;
+    margin-top: .9rem;
+    font-size: clamp(3.25rem, 12vw, 5rem);
+    line-height: .9;
+  }
+
+  .pizza-intro__price {
+    margin-top: .85rem;
+    font-size: 1.9rem;
+  }
+
+  .pizza-intro__description {
+    max-width: 34rem;
+    margin-top: 1rem;
+    font-size: .84rem;
+    line-height: 1.7;
+  }
+
+  .pizza-intro__content > .pizza-ingredients {
+    margin-top: 1.25rem;
+  }
+
+  .pizza-intro__content > .pizza-ingredients .pizza-ingredients__list {
+    gap: .4rem;
+    margin-top: .65rem;
+  }
+
+  .pizza-intro__content > .pizza-ingredients .pizza-ingredients__list li {
+    padding: .42rem .7rem;
+    font-size: .68rem;
+  }
+
+  .pizza-intro__content > .order-link {
+    margin-top: 1.35rem;
+    font-size: .78rem;
+  }
+
+  .pizza-intro__content > .order-link .order-link__button {
+    width: 3.1rem;
+  }
+
+  /* A roda ganha uma área própria abaixo do texto, sem competir com ele. */
+  .pizza-intro__visual {
+    position: relative;
+    inset: auto;
+    flex: 0 0 auto;
+    width: calc(100% + 2 * var(--page-gutter));
+    height: clamp(18rem, 82vw, 25rem);
+    margin: .8rem calc(-1 * var(--page-gutter)) 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .pizza-wheel {
+    top: 50%;
+    right: auto;
+    left: 50%;
+    width: min(112vw, 27rem);
+    transform: translate(-50%, -50%) rotate(var(--wheel-rotation, 0deg));
+    pointer-events: auto;
+  }
+
+  .pizza-wheel__item {
+    width: clamp(5.5rem, 21vw, 7.2rem);
+  }
+
+  .pizza-featured {
+    top: auto;
+    bottom: clamp(9rem, 25vw, 12rem);
+    left: 50%;
+    width: clamp(9rem, 38vw, 13rem);
+    transform: translate(-50%, 50%) scale(.92);
+  }
+
+  .pizza-intro.has-details .pizza-featured {
+    transform: translate(-50%, 50%) scale(1);
+  }
+
+  .pizza-intro.has-details .pizza-detail {
+    width: auto;
+  }
+
+  .pizza-detail {
+    top: auto;
+    right: var(--page-gutter);
+    bottom: 1rem;
+    left: var(--page-gutter);
+    width: auto;
+    max-height: min(58dvh, 34rem);
+    padding: 1.2rem;
+    transform: translateY(1rem);
+  }
+
+  .pizza-intro.has-details .pizza-detail {
+    transform: translateY(0);
+  }
+
+  .pizza-detail__title {
+    max-width: 11ch;
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+  }
+
+  .pizza-detail__description {
+    margin-top: .9rem;
+    font-size: .82rem;
+    line-height: 1.65;
+  }
+
+  .pizza-detail__ingredients {
+    margin-top: 1rem;
+  }
+
+  .pizza-detail__actions {
+    gap: .5rem;
+    margin-top: 1rem;
+  }
+
+  .pizza-detail__actions .pizza-detail__order,
+  .pizza-detail__customize {
+    min-height: 2.9rem;
+  }
+
+  .menu-section {
+    padding: 3.75rem var(--page-gutter) 4.5rem;
+    scroll-margin-top: 1rem;
+  }
+
+  .menu-section__heading {
+    margin-bottom: 1.6rem;
+  }
+
+  .menu-section__title {
+    margin-top: .65rem;
+    font-size: clamp(2.7rem, 9vw, 4rem);
+  }
+
+  .menu-section__description {
+    margin-bottom: 0;
+    font-size: .82rem;
+  }
+
+  .menu-categories {
+    flex-wrap: nowrap;
+    gap: .55rem;
+    margin: 0 calc(-1 * var(--page-gutter)) 1.4rem;
+    padding: .15rem var(--page-gutter) .6rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .menu-categories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .menu-category {
+    flex: 0 0 auto;
+    min-height: 2.7rem;
+    padding: .65rem .95rem;
+    font-size: .72rem;
+    white-space: nowrap;
+  }
+
+  .menu-products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .75rem;
+  }
+
+  .menu-product {
+    border-radius: .8rem;
+  }
+
+  .menu-product__image {
+    aspect-ratio: 1 / .88;
+  }
+
+  .menu-product__body {
+    padding: .85rem;
+  }
+
+  .menu-product__name {
+    font-size: clamp(1.25rem, 5vw, 1.65rem);
+    overflow-wrap: anywhere;
+  }
+
+  .menu-product__description {
+    margin: .5rem 0 .8rem;
+    font-size: .72rem;
+    line-height: 1.5;
+  }
+
+  .menu-product__footer {
+    align-items: stretch;
+    flex-direction: column;
+    gap: .65rem;
+  }
+
+  .menu-product__price {
+    font-size: 1.25rem;
+  }
+
+  .menu-product__add {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: .7rem .6rem;
+    font-size: .7rem;
+  }
+
+  .menu-detail-dialog {
+    width: calc(100vw - 1rem);
+    height: calc(100dvh - 1rem - env(safe-area-inset-top));
+    max-height: none;
+    top: 50%;
+    border-radius: .9rem;
+  }
+
+  .menu-detail-dialog__close {
+    top: .65rem;
+    right: .65rem;
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .menu-detail-dialog__content {
+    padding: 1.1rem 1.15rem calc(1.25rem + env(safe-area-inset-bottom));
+  }
+
+  .menu-detail-dialog__title {
+    font-size: clamp(2.3rem, 9vw, 3.2rem);
+  }
+
+  .menu-detail-dialog__footer {
+    gap: .8rem;
+  }
+
+  .menu-detail-dialog__add {
+    width: 100%;
+    min-height: 2.9rem;
+  }
+
+  .cart-drawer {
+    width: 100%;
+    padding:
+      calc(1.1rem + env(safe-area-inset-top))
+      max(1.1rem, var(--page-gutter))
+      calc(1.1rem + env(safe-area-inset-bottom));
+  }
+
+  .cart-drawer__header h2 {
+    font-size: 2.25rem;
+  }
+
+  .cart-quantity button,
+  .cart-remove {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .cart-note {
+    min-height: 5rem;
+    font-size: .85rem;
+  }
+
+  .cart-checkout {
+    min-height: 3.1rem;
+  }
+
+  .checkout-modal {
+    padding:
+      calc(1.1rem + env(safe-area-inset-top))
+      max(1.1rem, var(--page-gutter))
+      calc(1.2rem + env(safe-area-inset-bottom));
+  }
+
+  .checkout-close {
+    width: 2.7rem;
+    height: 2.7rem;
+    flex: 0 0 auto;
+  }
+
+  .checkout-form {
+    gap: 1.2rem;
+    padding-bottom: .5rem;
+  }
+
+  .checkout-section {
+    gap: .75rem;
+  }
+
+  .checkout-field {
+    font-size: .78rem;
+  }
+
+  .checkout-field input,
+  .pizza-customization__select {
+    min-height: 2.9rem;
+    font-size: 16px;
+  }
+
+  .checkout-choice {
+    min-height: 3.25rem;
+    padding: .9rem;
+  }
+
+  .checkout-choice input {
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 auto;
+  }
+
+  .checkout-submit {
+    min-height: 3.1rem;
+  }
+
+  .cart-feedback {
+    right: max(1rem, var(--page-gutter));
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+    max-width: calc(100vw - 2rem);
+    border-radius: .8rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-header {
+    padding-inline: 1rem;
+  }
+
+  .site-nav {
+    gap: .55rem;
+  }
+
+  .site-nav__link,
+  .site-cart {
+    font-size: .68rem;
+  }
+
+  .brand__name {
+    font-size: 1.12rem;
+  }
+
+  .pizza-intro {
+    padding-inline: 1rem;
+  }
+
+  .pizza-intro__visual {
+    width: calc(100% + 2rem);
+    margin-inline: -1rem;
+  }
+
+  .pizza-wheel {
+    width: min(116vw, 25rem);
+  }
+
+  .pizza-wheel__item {
+    width: clamp(5.1rem, 21vw, 6.3rem);
+  }
+
+  .pizza-detail {
+    right: 1rem;
+    left: 1rem;
+  }
+
+  .pizza-detail__actions .pizza-detail__order,
+  .pizza-detail__actions .pizza-detail__order .order-link__label,
+  .pizza-detail__customize {
+    font-size: .62rem;
+  }
+
+  .menu-section {
+    padding-inline: 1rem;
+  }
+
+  .menu-products {
+    gap: .6rem;
+  }
+
+  .menu-product__body {
+    padding: .72rem;
+  }
+
+  .menu-product__name {
+    font-size: 1.3rem;
+  }
+
+  .menu-product__description {
+    font-size: .69rem;
+  }
+
+  .menu-product__add {
+    font-size: .66rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .site-nav {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    column-gap: 1rem;
+    row-gap: .7rem;
+  }
+
+  .site-cart {
+    margin-left: auto;
+  }
+
+  .menu-products {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .menu-product__image {
+    aspect-ratio: 16 / 9;
+  }
+
+  .menu-product__body {
+    padding: 1rem;
+  }
+
+  .menu-product__footer {
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .menu-product__add {
+    width: auto;
+    min-width: 8rem;
+  }
+
+  .pizza-detail__actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pizza-detail__actions .pizza-detail__order,
+  .pizza-detail__customize {
+    min-height: 2.8rem;
+    font-size: .72rem;
+  }
+}
+
+@media (max-height: 680px) and (max-width: 760px) {
+  .pizza-intro__visual {
+    height: 17rem;
+  }
+
+  .pizza-detail {
+    max-height: 68dvh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-product,
+  .menu-product__image img,
+  .menu-product__add,
+  .pizza-wheel__item,
+  .pizza-detail__actions .pizza-detail__order,
+  .menu-detail-dialog,
+  .menu-detail-backdrop {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
