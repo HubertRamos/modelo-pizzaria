@@ -105,29 +105,31 @@
     if (mobileNav || !wheel.parentElement) return;
     mobileNav = document.createElement('div');
     mobileNav.className = 'pizza-mobile-nav';
-    mobileNav.setAttribute('aria-label', 'Navegar pelas pizzas');
+    mobileNav.setAttribute('role', 'group');
+    mobileNav.setAttribute('aria-label', 'Selecionar pizza');
 
-    const previous = document.createElement('button');
-    previous.type = 'button';
-    previous.className = 'pizza-mobile-nav__arrow';
-    previous.setAttribute('aria-label', 'Pizza anterior');
-    previous.textContent = '‹';
+    const indicators = items.map((item, index) => {
+      const indicator = document.createElement('button');
+      indicator.type = 'button';
+      indicator.className = 'pizza-mobile-nav__pill';
+      indicator.setAttribute('aria-label', 'Mostrar ' + (item.dataset.pizzaName || ('pizza ' + (index + 1))));
+      indicator.setAttribute('aria-pressed', 'false');
+      indicator.addEventListener('click', () => {
+        if (index === activeIndex) return;
+        moveMobile(index > activeIndex ? 1 : -1);
+        if (activeIndex !== index) {
+          setActiveItem(index);
+          wheel.classList.remove('is-mobile-next', 'is-mobile-previous');
+          void wheel.offsetWidth;
+          wheel.classList.add(index > activeIndex ? 'is-mobile-next' : 'is-mobile-previous');
+        }
+      });
+      mobileNav.append(indicator);
+      return indicator;
+    });
 
-    const counter = document.createElement('span');
-    counter.className = 'pizza-mobile-nav__count';
-    counter.setAttribute('aria-live', 'polite');
-
-    const next = document.createElement('button');
-    next.type = 'button';
-    next.className = 'pizza-mobile-nav__arrow';
-    next.setAttribute('aria-label', 'Próxima pizza');
-    next.textContent = '›';
-
-    mobileNav.append(previous, counter, next);
     wheel.parentElement.append(mobileNav);
-    mobileNav._counter = counter;
-    previous.addEventListener('click', () => moveMobile(-1));
-    next.addEventListener('click', () => moveMobile(1));
+    mobileNav._indicators = indicators;
   };
 
   if (mobileMode.matches) createMobileNav();
@@ -223,7 +225,13 @@
     });
 
     if (status) status.textContent = (items[activeIndex]?.dataset.pizzaName || ('Pizza ' + (activeIndex + 1))) + ' em destaque.';
-    if (mobileNav && mobileNav._counter) mobileNav._counter.textContent = (activeIndex + 1) + ' / ' + items.length;
+    if (mobileNav?._indicators) {
+      mobileNav._indicators.forEach((indicator, index) => {
+        const active = index === activeIndex;
+        indicator.classList.toggle('is-active', active);
+        indicator.setAttribute('aria-pressed', String(active));
+      });
+    }
   };
 
   const moveMobile = (direction) => {
