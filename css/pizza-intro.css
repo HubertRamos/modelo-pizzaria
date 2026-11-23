@@ -816,3 +816,11 @@
     bottom: auto;
   }
 }
+
+
+/* Desloca a roda inteira para a direita no desktop, sem alterar o mobile. */
+@media (min-width: 761px) {
+  .pizza-wheel {
+    right: -36%;
+  }
+}
