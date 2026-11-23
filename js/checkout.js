@@ -3,7 +3,7 @@
   let storeConfig={whatsappNumber:"",deliveryFee:null};
   if(!modal||!form)return;
   const readCart=()=>{try{const data=JSON.parse(localStorage.getItem("ruota-cart")||"[]");return Array.isArray(data)?data.map(item=>{const product=(window.RUOTA?.catalog?.products||[]).find(entry=>entry.id===item.id)||item;return {...product,quantity:item.quantity,customization:item.customization||null,unitPrice:Number.isFinite(Number(item.unitPrice))?Number(item.unitPrice):Number(product.price)}}):[]}catch{return[]}};
-  const parsePrice=value=>{const text=String(value??"").replace(/R\$/i,"").trim().replace(/\./g,"").replace(",",".");if(!/^[0-9]+(\.\d{1,2})?$/.test(text))return null;const number=Number(text);return Number.isFinite(number)&&number>0?number:null};
+  const parsePrice=value=>{if(typeof value==="number")return Number.isFinite(value)&&value>0?value:null;const text=String(value??"").replace(/R\$/i,"").trim();if(!text)return null;const normalized=text.includes(",")?text.replace(/\./g,"").replace(",","."):text;if(!/^[0-9]+(\.\d{1,2})?$/.test(normalized))return null;const number=Number(normalized);return Number.isFinite(number)&&number>0?number:null};
   const currency=value=>value.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
   const formValue=name=>String(new FormData(form).get(name)||"").trim();
   const showError=message=>{error.textContent=message;error.hidden=false};
