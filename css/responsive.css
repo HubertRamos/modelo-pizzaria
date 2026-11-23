@@ -949,3 +949,21 @@
     will-change: transform, opacity;
   }
 }
+
+
+/* O carrossel usa gestos horizontais; a página continua rolando verticalmente. */
+@media (max-width: 760px) {
+  .pizza-intro__visual {
+    touch-action: pan-y pinch-zoom;
+    overscroll-behavior-y: contain;
+  }
+
+  .pizza-wheel {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .pizza-wheel__item,
+  .pizza-wheel__item img {
+    touch-action: pan-y pinch-zoom;
+  }
+}
