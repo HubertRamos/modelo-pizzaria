@@ -101,6 +101,7 @@
   const mobileMode = window.matchMedia('(max-width: 760px)');
   let mobilePointerStart = null;
   let mobileGestureMoved = false;
+  let mobileDragFrame = 0;
   let mobileNav = null;
   const createMobileNav = () => {
     if (mobileNav || !wheel.parentElement) return;
@@ -445,14 +446,57 @@
     }
     wheel.classList.remove("is-mobile-next", "is-mobile-previous");
   });
+  const clearMobileDrag = () => {
+    if (mobileDragFrame) cancelAnimationFrame(mobileDragFrame);
+    mobileDragFrame = 0;
+    wheel.classList.remove("is-mobile-dragging");
+    items.forEach(item => {
+      item.style.removeProperty("transform");
+      item.style.removeProperty("opacity");
+      item.style.removeProperty("z-index");
+      item.style.removeProperty("transition");
+    });
+  };
+
+  const renderMobileDrag = (dx) => {
+    if (!mobilePointerStart || !mobileMode.matches) return;
+    const width = Math.max(1, wheel.getBoundingClientRect().width);
+    const direction = dx < 0 ? 1 : -1;
+    const incomingIndex = (activeIndex + direction + items.length) % items.length;
+    const outgoing = items[activeIndex];
+    const incoming = items[incomingIndex];
+    const progress = Math.min(1, Math.abs(dx) / (width * 0.72));
+    const scale = 1 - progress * 0.075;
+    const incomingOffset = direction > 0 ? width + dx : -width + dx;
+
+    wheel.classList.add("is-mobile-dragging");
+    outgoing.style.transition = "none";
+    outgoing.style.transform = `translate(calc(50% + ${dx}px), -50%) scale(${scale})`;
+    outgoing.style.opacity = String(Math.max(0.18, 1 - progress * 0.55));
+    outgoing.style.zIndex = "3";
+
+    incoming.style.transition = "none";
+    incoming.style.transform = `translate(calc(50% + ${incomingOffset}px), -50%) scale(${0.92 + progress * 0.08})`;
+    incoming.style.opacity = String(Math.min(1, progress * 1.8));
+    incoming.style.zIndex = "2";
+  };
+
   wheel.addEventListener("pointerdown", (event) => {
     if (mobileMode.matches) {
+      if (intro?.classList.contains("has-details")) return;
       if (event.target.closest(".pizza-mobile-nav button")) return;
       if (event.pointerType === "mouse" && event.button !== 0) return;
+      clearMobileDrag();
       mobileGestureMoved = false;
-      mobilePointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
-      const captureTarget = event.target.closest("[data-wheel-item]") || wheel;
-      try { captureTarget.setPointerCapture(event.pointerId); } catch {}
+      mobilePointerStart = {
+        id: event.pointerId,
+        x: event.clientX,
+        y: event.clientY,
+        lastX: event.clientX,
+        lastTime: performance.now(),
+        velocity: 0
+      };
+      try { wheel.setPointerCapture(event.pointerId); } catch {}
       return;
     }
     if (event.target.closest("[data-wheel-item]")) return;
@@ -461,29 +505,62 @@
     dragStartAngle = pointerAngle(event); dragStartRotation = rotation;
     wheel.setPointerCapture(event.pointerId); event.preventDefault();
   });
+
   wheel.addEventListener("pointermove", (event) => {
-    if (mobileMode.matches || event.pointerId !== activePointerId) return;
-    const delta = normalizeAngle(pointerAngle(event) - dragStartAngle); setRotation(dragStartRotation + delta);
-  });
-  const finishDrag = (event) => {
     if (mobileMode.matches) {
       if (!mobilePointerStart || event.pointerId !== mobilePointerStart.id) return;
       const dx = event.clientX - mobilePointerStart.x;
       const dy = event.clientY - mobilePointerStart.y;
-      const wasHorizontalSwipe = Math.abs(dx) > 32 && Math.abs(dx) > Math.abs(dy) * 1.1;
+      if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+      if (Math.abs(dy) > Math.abs(dx) * 1.25 && Math.abs(dx) < 12) return;
+      event.preventDefault();
+      mobileGestureMoved = true;
+      const now = performance.now();
+      const elapsed = Math.max(1, now - mobilePointerStart.lastTime);
+      mobilePointerStart.velocity = (event.clientX - mobilePointerStart.lastX) / elapsed;
+      mobilePointerStart.lastX = event.clientX;
+      mobilePointerStart.lastTime = now;
+      if (mobileDragFrame) cancelAnimationFrame(mobileDragFrame);
+      mobileDragFrame = requestAnimationFrame(() => {
+        mobileDragFrame = 0;
+        renderMobileDrag(dx);
+      });
+      return;
+    }
+    if (event.pointerId !== activePointerId) return;
+    const delta = normalizeAngle(pointerAngle(event) - dragStartAngle); setRotation(dragStartRotation + delta);
+  });
+
+  const finishDrag = (event) => {
+    if (mobileMode.matches) {
+      if (!mobilePointerStart || event.pointerId !== mobilePointerStart.id) return;
+      const drag = mobilePointerStart;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      const width = Math.max(1, wheel.getBoundingClientRect().width);
+      const horizontal = Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy) * 1.1;
+      const shouldAdvance = horizontal && (
+        Math.abs(dx) > width * 0.18 ||
+        (Math.abs(dx) > 34 && Math.abs(drag.velocity) > 0.42)
+      );
+
       mobilePointerStart = null;
-      if (wheel.hasPointerCapture(event.pointerId)) wheel.releasePointerCapture(event.pointerId);
-      if (wasHorizontalSwipe) {
-        mobileGestureMoved = true;
-        moveMobile(dx < 0 ? 1 : -1);
-        window.setTimeout(() => { mobileGestureMoved = false; }, 450);
+      if (wheel.hasPointerCapture(event.pointerId)) {
+        try { wheel.releasePointerCapture(event.pointerId); } catch {}
       }
+      if (mobileGestureMoved) {
+        mobileGestureMoved = true;
+        window.setTimeout(() => { mobileGestureMoved = false; }, 500);
+      }
+      clearMobileDrag();
+      if (shouldAdvance) moveMobile(dx < 0 ? 1 : -1);
       return;
     }
     if (event.pointerId !== activePointerId) return;
     if (wheel.hasPointerCapture(event.pointerId)) wheel.releasePointerCapture(event.pointerId);
     activePointerId = null; snapToSelectionPoint();
   };
+
   wheel.addEventListener("pointerup", finishDrag);
   wheel.addEventListener("pointercancel", finishDrag);
   wheel.addEventListener("lostpointercapture", () => {
