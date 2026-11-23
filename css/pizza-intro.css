@@ -747,3 +747,72 @@
   bottom: 12%;
   left: 12%;
 }
+
+
+/* Distribuição radial corrigida: oito pizzas com espaço real entre os centros. */
+@media (min-width: 761px) {
+  .pizza-wheel {
+    width: clamp(48rem, 82vw, 78rem);
+  }
+
+  .pizza-wheel__item {
+    width: clamp(11rem, 19vw, 16rem);
+    transform: translate(-50%, -50%);
+  }
+
+  .pizza-wheel__item--top {
+    top: 9%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+  }
+
+  .pizza-wheel__item--upper-right {
+    top: 21%;
+    left: 79%;
+    right: auto;
+    bottom: auto;
+  }
+
+  .pizza-wheel__item--right {
+    top: 50%;
+    left: 91%;
+    right: auto;
+    bottom: auto;
+  }
+
+  .pizza-wheel__item--lower-right {
+    top: 79%;
+    left: 79%;
+    right: auto;
+    bottom: auto;
+  }
+
+  .pizza-wheel__item--bottom {
+    top: 91%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+  }
+
+  .pizza-wheel__item--lower-left {
+    top: 79%;
+    left: 21%;
+    right: auto;
+    bottom: auto;
+  }
+
+  .pizza-wheel__item--left {
+    top: 50%;
+    left: 9%;
+    right: auto;
+    bottom: auto;
+  }
+
+  .pizza-wheel__item--upper-left {
+    top: 21%;
+    left: 21%;
+    right: auto;
+    bottom: auto;
+  }
+}
