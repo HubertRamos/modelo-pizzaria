@@ -1,4 +1,21 @@
 {
   "whatsappNumber": "",
-  "deliveryFee": null
+  "fulfillment": {
+    "delivery": {
+      "enabled": true,
+      "feeMode": "fixed",
+      "fixedFee": null,
+      "minimumOrder": null,
+      "neighborhoods": []
+    },
+    "pickup": {
+      "enabled": true,
+      "minimumOrder": null
+    }
+  },
+  "paymentMethods": {
+    "pix": true,
+    "cash": true,
+    "card": true
+  }
 }
