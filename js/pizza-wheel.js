@@ -102,6 +102,7 @@
   let mobilePointerStart = null;
   let mobileGestureMoved = false;
   let mobileDragFrame = 0;
+  let mobileCaptureTarget = null;
   let mobileNav = null;
   const createMobileNav = () => {
     if (mobileNav || !wheel.parentElement) return;
@@ -496,7 +497,8 @@
         lastTime: performance.now(),
         velocity: 0
       };
-      try { wheel.setPointerCapture(event.pointerId); } catch {}
+      mobileCaptureTarget = event.target.closest("[data-wheel-item]") || wheel;
+      try { mobileCaptureTarget.setPointerCapture(event.pointerId); } catch {}
       return;
     }
     if (event.target.closest("[data-wheel-item]")) return;
@@ -539,15 +541,16 @@
       const dy = event.clientY - drag.y;
       const width = Math.max(1, wheel.getBoundingClientRect().width);
       const horizontal = Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy) * 1.1;
-      const shouldAdvance = horizontal && (
+      const shouldAdvance = event.type !== "pointercancel" && horizontal && (
         Math.abs(dx) > width * 0.18 ||
         (Math.abs(dx) > 34 && Math.abs(drag.velocity) > 0.42)
       );
 
       mobilePointerStart = null;
-      if (wheel.hasPointerCapture(event.pointerId)) {
-        try { wheel.releasePointerCapture(event.pointerId); } catch {}
+      if (mobileCaptureTarget?.hasPointerCapture?.(event.pointerId)) {
+        try { mobileCaptureTarget.releasePointerCapture(event.pointerId); } catch {}
       }
+      mobileCaptureTarget = null;
       if (mobileGestureMoved) {
         mobileGestureMoved = true;
         window.setTimeout(() => { mobileGestureMoved = false; }, 500);
