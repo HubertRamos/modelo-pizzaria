@@ -711,3 +711,39 @@
 @media(prefers-reduced-motion:reduce){
   .pizza-detail__actions .pizza-detail__order{transition:none}
 }
+
+
+/* Roda de demonstração com oito pizzas maiores e distribuídas pelo aro. */
+.pizza-wheel__item {
+  width: clamp(10rem, 18vw, 15rem);
+}
+
+.pizza-wheel__item--right {
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.pizza-wheel__item--bottom {
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pizza-wheel__item--left {
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.pizza-wheel__item--lower-right {
+  top: auto;
+  bottom: 12%;
+  right: 12%;
+}
+
+.pizza-wheel__item--lower-left {
+  top: auto;
+  bottom: 12%;
+  left: 12%;
+}
