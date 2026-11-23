@@ -3,6 +3,18 @@
   const setText=(node,value)=>{if(node&&typeof value==="string"&&value.trim())node.textContent=value};
   const safeLink=(node,url)=>{if(!node||typeof url!=="string"||!url.trim())return;try{const parsed=new URL(url,location.href);if(!["http:","https:","mailto:","tel:"].includes(parsed.protocol))return;node.href=parsed.href}catch{}};
   const get=(object,path)=>path.split(".").reduce((value,key)=>value?.[key],object);
+  const story=$("#sobre");
+  if(story&&"IntersectionObserver" in window&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    story.classList.add("story-motion-ready");
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting)return;
+        story.classList.add("is-in-view");
+        observer.unobserve(story);
+      });
+    },{threshold:.18,rootMargin:"0px 0px -8% 0px"});
+    observer.observe(story);
+  }
   const render=(store)=>{
     document.querySelectorAll("[data-store]").forEach(node=>setText(node,get(store,node.dataset.store)));
     document.querySelectorAll("[data-store-link]").forEach(node=>{const value=get(store,node.dataset.storeLink);if(node.dataset.storeLink==="contact.email"&&value){node.href="mailto:"+value;node.textContent=value}else safeLink(node,value)});
