@@ -1,0 +1,120 @@
+/* RUOTA — movimento editorial das seções */
+@media (prefers-reduced-motion:no-preference){
+  .site-header.motion-ready .brand,
+  .site-header.motion-ready .site-nav{
+    opacity:0;
+    animation:header-arrive .8s cubic-bezier(.2,.75,.25,1) both;
+  }
+  .site-header.motion-ready .site-nav{animation-delay:.14s}
+  @keyframes header-arrive{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+
+  .pizza-intro.motion-ready .pizza-intro__content>*{
+    opacity:0;
+    transform:translateY(18px);
+    animation:hero-copy-arrive .72s cubic-bezier(.2,.75,.25,1) both;
+  }
+  .pizza-intro.motion-ready .pizza-intro__eyebrow{animation-delay:.12s}
+  .pizza-intro.motion-ready .pizza-intro__title{animation-delay:.24s}
+  .pizza-intro.motion-ready .pizza-intro__price{animation-delay:.38s}
+  .pizza-intro.motion-ready .pizza-intro__description{animation-delay:.5s}
+  .pizza-intro.motion-ready .pizza-ingredients{animation-delay:.64s}
+  .pizza-intro.motion-ready .order-link{animation-delay:.8s}
+  .pizza-intro.motion-ready .pizza-wheel__item{
+    opacity:0;
+    filter:blur(8px);
+    scale:.78;
+    animation:wheel-item-arrive .9s cubic-bezier(.16,.82,.22,1) both;
+  }
+  .pizza-intro.motion-ready .pizza-wheel__item:nth-of-type(2){animation-delay:.2s}
+  .pizza-intro.motion-ready .pizza-wheel__item:nth-of-type(3){animation-delay:.32s}
+  .pizza-intro.motion-ready .pizza-wheel__item:nth-of-type(4){animation-delay:.44s}
+  .pizza-intro.motion-ready .pizza-wheel__item:nth-of-type(5){animation-delay:.56s}
+  .pizza-intro.motion-ready .pizza-wheel__item:nth-of-type(6){animation-delay:.68s}
+  @keyframes hero-copy-arrive{to{opacity:1;transform:translateY(0)}}
+  @keyframes wheel-item-arrive{to{opacity:1;filter:blur(0);scale:1}}
+
+  .starters-section.motion-ready .starters-section__heading,
+  .starters-section.motion-ready .starters-section__link,
+  .menu-section.motion-ready .menu-section__heading,
+  .menu-section.motion-ready .menu-categories,
+  .site-footer.motion-ready .site-footer__bottom{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .8s ease,transform .9s cubic-bezier(.2,.75,.25,1);
+  }
+  .starters-section.motion-ready.is-in-view .starters-section__heading,
+  .starters-section.motion-ready.is-in-view .starters-section__link,
+  .menu-section.motion-ready.is-in-view .menu-section__heading,
+  .menu-section.motion-ready.is-in-view .menu-categories,
+  .site-footer.motion-ready.is-in-view .site-footer__bottom{opacity:1;transform:translateY(0)}
+  .starters-section.motion-ready .starters-section__heading{transition-delay:.04s}
+  .starters-section.motion-ready .starters-section__link{transition-delay:.35s}
+  .menu-section.motion-ready .menu-section__heading{transition-delay:.02s}
+  .menu-section.motion-ready .menu-categories{transition-delay:.16s}
+  .site-footer.motion-ready .site-footer__bottom{transition-delay:.24s}
+
+  .starters-section.motion-ready .starter-card{
+    opacity:0;
+    transform:translateY(34px) scale(.985);
+    transition:opacity .8s ease,transform .95s cubic-bezier(.2,.75,.25,1),border-color .28s ease;
+  }
+  .starters-section.motion-ready.is-in-view .starter-card{opacity:1;transform:translateY(0) scale(1)}
+  .starters-section.motion-ready .starter-card:nth-child(2){transition-delay:.16s}
+  .starters-section.motion-ready .starter-card__image{clip-path:inset(0 0 100% 0);transition:clip-path 1s cubic-bezier(.2,.75,.25,1)}
+  .starters-section.motion-ready.is-in-view .starter-card__image{clip-path:inset(0)}
+  .starters-section.motion-ready .starter-card:nth-child(2) .starter-card__image{transition-delay:.2s}
+
+  .menu-section.motion-ready .menu-category{
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity .5s ease,transform .6s cubic-bezier(.2,.75,.25,1),background .18s,border-color .18s;
+  }
+  .menu-section.motion-ready.is-in-view .menu-category{opacity:1;transform:translateY(0)}
+  .menu-section.motion-ready .menu-category:nth-child(2){transition-delay:.06s}
+  .menu-section.motion-ready .menu-category:nth-child(3){transition-delay:.12s}
+  .menu-section.motion-ready .menu-category:nth-child(4){transition-delay:.18s}
+  .menu-section.motion-ready .menu-category:nth-child(5){transition-delay:.24s}
+  .menu-section.motion-ready .menu-category:nth-child(6){transition-delay:.3s}
+  .menu-section.motion-ready .menu-product{
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity .65s ease,transform .75s cubic-bezier(.2,.75,.25,1),border-color .28s ease,box-shadow .28s ease;
+  }
+  .menu-section.motion-ready.is-in-view .menu-product{opacity:1;transform:translateY(0)}
+  .menu-section.motion-ready.is-in-view .menu-product:nth-child(2){transition-delay:.06s}
+  .menu-section.motion-ready.is-in-view .menu-product:nth-child(3){transition-delay:.12s}
+  .menu-section.motion-ready.is-in-view .menu-product:nth-child(4){transition-delay:.18s}
+  .menu-section.motion-ready.is-in-view .menu-product:nth-child(5){transition-delay:.24s}
+  .menu-section.motion-ready.is-in-view .menu-product:nth-child(6){transition-delay:.3s}
+
+  .site-footer.motion-ready .site-footer__brand,
+  .site-footer.motion-ready .site-footer__column{
+    opacity:0;
+    transform:translateY(22px);
+    transition:opacity .75s ease,transform .85s cubic-bezier(.2,.75,.25,1);
+  }
+  .site-footer.motion-ready.is-in-view .site-footer__brand,
+  .site-footer.motion-ready.is-in-view .site-footer__column{opacity:1;transform:translateY(0)}
+  .site-footer.motion-ready .site-footer__column:nth-child(2){transition-delay:.1s}
+  .site-footer.motion-ready .site-footer__column:nth-child(3){transition-delay:.2s}
+  .site-footer.motion-ready .site-footer__column:nth-child(4){transition-delay:.3s}
+  .site-footer.motion-ready .site-footer__bottom{transition-delay:.42s}
+}
+@media(prefers-reduced-motion:reduce){
+  .site-header.motion-ready .brand,.site-header.motion-ready .site-nav,
+  .pizza-intro.motion-ready .pizza-intro__content>*,
+  .pizza-intro.motion-ready .pizza-wheel__item,
+  .starters-section.motion-ready .starters-section__heading,
+  .starters-section.motion-ready .starters-section__link,
+  .starters-section.motion-ready .starter-card,
+  .starters-section.motion-ready .starter-card__image,
+  .menu-section.motion-ready .menu-section__heading,
+  .menu-section.motion-ready .menu-categories,
+  .menu-section.motion-ready .menu-category,
+  .menu-section.motion-ready .menu-product,
+  .site-footer.motion-ready .site-footer__brand,
+  .site-footer.motion-ready .site-footer__column,
+  .site-footer.motion-ready .site-footer__bottom{
+    opacity:1!important;filter:none!important;clip-path:none!important;transform:none!important;scale:1!important;animation:none!important;transition:none!important;
+  }
+}
