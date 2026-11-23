@@ -83,6 +83,7 @@
   const featured = document.querySelector("#pizza-featured");
   const closeDetail = detail?.querySelector(".pizza-detail__close");
   const addToCartButton = detail?.querySelector("#add-to-cart");
+  const customizeButton=detail?.querySelector("#customize-pizza");
   const cartCount = document.querySelector("#cart-count");
   const cartFeedback = document.querySelector("#cart-feedback");
   const CART_STORAGE_KEY = "ruota-cart";
@@ -124,14 +125,19 @@
 
   const addSelectedPizzaToCart = () => {
     const product = wheelProducts[activeIndex];
-    if (product && window.RUOTA?.openCustomization) { window.RUOTA.openCustomization(product,{sizeId:selectedWheelSizeId}); return; }
-    if (!product || !Number.isFinite(Number(product.price)) || Number(product.price) < 0) return;
+    if (!product) return;
+    const size=(product.customization?.sizes||[]).find(item=>item.id===selectedWheelSizeId);
+    const unitPrice=Number(size?.price??product.price);
+    if (!Number.isFinite(unitPrice)||unitPrice<0) return;
+    const customization=product.customization?.enabled?{sizeId:selectedWheelSizeId||null,secondFlavorId:null,toppingIds:[],removedIngredients:[]}:null;
     const cart = readCart();
-    const existing = cart.find(item => item.id === product.id);
+    const signature=JSON.stringify(customization||{});
+    const existing = cart.find(item => item.id === product.id && JSON.stringify(item.customization||{})===signature);
     if (existing) {
       existing.quantity = (Number(existing.quantity) || 0) + 1;
+      existing.unitPrice=unitPrice;
     } else {
-      cart.push({ id: product.id, quantity: 1 });
+      cart.push({ id: product.id, quantity: 1, customization, unitPrice });
     }
 
     try {
@@ -249,7 +255,8 @@
       detailDescriptionToggle.setAttribute("aria-expanded", "false");
     }
     fillIngredients(detailIngredients, product.ingredients);
-    if (addToCartButton) addToCartButton.disabled = !Number.isFinite(Number(product.price));
+    if (addToCartButton) addToCartButton.disabled = !Number.isFinite(Number(sizes.find(size=>size.id===selectedWheelSizeId)?.price??product.price));
+    if(customizeButton)customizeButton.disabled=!product.customization?.enabled;
 
     intro.classList.add("has-details");
     detail.removeAttribute("inert");
@@ -359,6 +366,7 @@
 
   closeDetail?.addEventListener("click", closeDetails);
   addToCartButton?.addEventListener("click", addSelectedPizzaToCart);
+  customizeButton?.addEventListener("click",()=>{const product=wheelProducts[activeIndex];if(product&&window.RUOTA?.openCustomization)window.RUOTA.openCustomization(product,{sizeId:selectedWheelSizeId})});
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && intro?.classList.contains("has-details")) {
