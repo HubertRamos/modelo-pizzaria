@@ -867,7 +867,7 @@
   .pizza-mobile-nav {
     left: 50%;
     right: auto;
-    bottom: .65rem;
+    bottom: 3.6rem;
     width: max-content;
     gap: .35rem;
     padding: .38rem .55rem;
@@ -900,7 +900,13 @@
   .pizza-mobile-nav__pill.is-active {
     width: 1.45rem;
     background: #e87932;
-    box-shadow: 0 0 0 2px rgb(232 121 50 / 18%), 0 0 12px rgb(232 121 50 / 48%);
+    box-shadow: none;
+  }
+
+  .pizza-wheel__item.is-active img {
+    filter:
+      drop-shadow(0 0 1.1rem rgb(232 121 50 / 42%))
+      drop-shadow(0 1.2rem 1.5rem rgb(0 0 0 / 34%));
   }
 
   .pizza-featured {
