@@ -639,8 +639,8 @@
   .pizza-intro {
     position: relative;
     display: block;
-    min-height: 42rem;
-    padding: 2.5rem var(--page-gutter) 4.5rem;
+    min-height: 0;
+    padding: 2.5rem var(--page-gutter) 3.8rem;
     overflow: hidden;
     isolation: isolate;
   }
@@ -829,7 +829,7 @@
 
 @media (max-width: 420px) {
   .pizza-intro {
-    min-height: 40rem;
+    min-height: 0;
     padding-inline: 1rem;
   }
 
@@ -867,7 +867,7 @@
   .pizza-mobile-nav {
     left: 50%;
     right: auto;
-    bottom: 7.5rem;
+    bottom: .8rem;
     width: max-content;
     gap: .35rem;
     padding: .38rem .55rem;
