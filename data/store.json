@@ -17,5 +17,41 @@
     "pix": true,
     "cash": true,
     "card": true
-  }
+  },
+  "brand": {
+    "name": "FORNO & TERRA",
+    "tagline": "Pizza boa aproxima pessoas."
+  },
+  "about": {
+    "enabled": true,
+    "eyebrow": "NOSSA ESSÊNCIA",
+    "title": "Mais do que pizza.\nUma história à mesa.",
+    "description": "No Forno & Terra, cada receita nasce do cuidado com os ingredientes, do tempo da massa e da alegria de reunir pessoas ao redor da mesa. Uma pizzaria feita para transformar encontros simples em boas memórias.",
+    "address": "Rua das Oliveiras, 245 · Centro",
+    "mapUrl": "",
+    "highlights": [
+      "Massa de fermentação lenta",
+      "Ingredientes selecionados",
+      "Feita com cuidado, todos os dias"
+    ]
+  },
+  "contact": {
+    "email": "ola@fornoeterra.example",
+    "instagram": "",
+    "facebook": ""
+  },
+  "openingHours": [
+    {
+      "days": "Ter–Qui",
+      "hours": "18h–23h"
+    },
+    {
+      "days": "Sex–Dom",
+      "hours": "18h–00h"
+    },
+    {
+      "days": "Segunda",
+      "hours": "Fechado"
+    }
+  ]
 }
