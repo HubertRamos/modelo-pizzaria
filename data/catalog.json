@@ -220,6 +220,422 @@
       "featured": false,
       "available": true,
       "ingredients": []
+    },
+    {
+      "id": "pizza-quatro-queijos",
+      "categoryId": "pizzas",
+      "name": "Quatro queijos",
+      "description": "Muçarela, parmesão, gorgonzola e provolone em uma combinação cremosa e intensa.",
+      "shortDescription": "Muçarela, parmesão, gorgonzola e provolone em uma combinação cremosa e intensa.",
+      "price": 49.9,
+      "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1200&q=85",
+      "featured": false,
+      "available": true,
+      "ingredients": [
+        "Molho de tomate",
+        "Muçarela",
+        "Parmesão",
+        "Gorgonzola",
+        "Provolone"
+      ],
+      "customization": {
+        "enabled": true,
+        "sizes": [
+          {
+            "id": "media",
+            "name": "Média",
+            "slices": 6,
+            "price": 49.9
+          },
+          {
+            "id": "grande",
+            "name": "Grande",
+            "slices": 8,
+            "price": 56.9
+          },
+          {
+            "id": "familia",
+            "name": "Família",
+            "slices": 12,
+            "price": 63.9
+          }
+        ],
+        "halfAndHalf": {
+          "enabled": true,
+          "maxFlavors": 2,
+          "pricing": "highest"
+        },
+        "toppings": {
+          "enabled": true,
+          "maxSelections": 5,
+          "items": [
+            {
+              "id": "queijo-extra",
+              "name": "Queijo extra",
+              "price": 6
+            },
+            {
+              "id": "bacon",
+              "name": "Bacon",
+              "price": 7
+            },
+            {
+              "id": "azeitona",
+              "name": "Azeitona",
+              "price": 4.5
+            }
+          ]
+        },
+        "removableIngredients": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "id": "pizza-pepperoni",
+      "categoryId": "pizzas",
+      "name": "Pepperoni",
+      "description": "Fatias de pepperoni levemente picantes sobre queijo derretido e molho de tomate.",
+      "shortDescription": "Fatias de pepperoni levemente picantes sobre queijo derretido e molho de tomate.",
+      "price": 47.9,
+      "image": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=1200&q=85",
+      "featured": false,
+      "available": true,
+      "ingredients": [
+        "Molho de tomate",
+        "Muçarela",
+        "Pepperoni"
+      ],
+      "customization": {
+        "enabled": true,
+        "sizes": [
+          {
+            "id": "media",
+            "name": "Média",
+            "slices": 6,
+            "price": 47.9
+          },
+          {
+            "id": "grande",
+            "name": "Grande",
+            "slices": 8,
+            "price": 54.9
+          },
+          {
+            "id": "familia",
+            "name": "Família",
+            "slices": 12,
+            "price": 61.9
+          }
+        ],
+        "halfAndHalf": {
+          "enabled": true,
+          "maxFlavors": 2,
+          "pricing": "highest"
+        },
+        "toppings": {
+          "enabled": true,
+          "maxSelections": 5,
+          "items": [
+            {
+              "id": "queijo-extra",
+              "name": "Queijo extra",
+              "price": 6
+            },
+            {
+              "id": "bacon",
+              "name": "Bacon",
+              "price": 7
+            },
+            {
+              "id": "azeitona",
+              "name": "Azeitona",
+              "price": 4.5
+            }
+          ]
+        },
+        "removableIngredients": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "id": "pizza-portuguesa",
+      "categoryId": "pizzas",
+      "name": "Portuguesa",
+      "description": "Uma combinação generosa de presunto, ovos, cebola, azeitonas e muçarela.",
+      "shortDescription": "Uma combinação generosa de presunto, ovos, cebola, azeitonas e muçarela.",
+      "price": 48.9,
+      "image": "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=1200&q=85",
+      "featured": false,
+      "available": true,
+      "ingredients": [
+        "Molho de tomate",
+        "Muçarela",
+        "Presunto",
+        "Ovo",
+        "Cebola",
+        "Azeitona"
+      ],
+      "customization": {
+        "enabled": true,
+        "sizes": [
+          {
+            "id": "media",
+            "name": "Média",
+            "slices": 6,
+            "price": 48.9
+          },
+          {
+            "id": "grande",
+            "name": "Grande",
+            "slices": 8,
+            "price": 55.9
+          },
+          {
+            "id": "familia",
+            "name": "Família",
+            "slices": 12,
+            "price": 62.9
+          }
+        ],
+        "halfAndHalf": {
+          "enabled": true,
+          "maxFlavors": 2,
+          "pricing": "highest"
+        },
+        "toppings": {
+          "enabled": true,
+          "maxSelections": 5,
+          "items": [
+            {
+              "id": "queijo-extra",
+              "name": "Queijo extra",
+              "price": 6
+            },
+            {
+              "id": "bacon",
+              "name": "Bacon",
+              "price": 7
+            },
+            {
+              "id": "azeitona",
+              "name": "Azeitona",
+              "price": 4.5
+            }
+          ]
+        },
+        "removableIngredients": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "id": "pizza-frango-catupiry",
+      "categoryId": "pizzas",
+      "name": "Frango com catupiry",
+      "description": "Frango temperado, catupiry cremoso e muçarela em uma das favoritas da casa.",
+      "shortDescription": "Frango temperado, catupiry cremoso e muçarela em uma das favoritas da casa.",
+      "price": 46.9,
+      "image": "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=1200&q=85",
+      "featured": false,
+      "available": true,
+      "ingredients": [
+        "Molho de tomate",
+        "Muçarela",
+        "Frango",
+        "Catupiry"
+      ],
+      "customization": {
+        "enabled": true,
+        "sizes": [
+          {
+            "id": "media",
+            "name": "Média",
+            "slices": 6,
+            "price": 46.9
+          },
+          {
+            "id": "grande",
+            "name": "Grande",
+            "slices": 8,
+            "price": 53.9
+          },
+          {
+            "id": "familia",
+            "name": "Família",
+            "slices": 12,
+            "price": 60.9
+          }
+        ],
+        "halfAndHalf": {
+          "enabled": true,
+          "maxFlavors": 2,
+          "pricing": "highest"
+        },
+        "toppings": {
+          "enabled": true,
+          "maxSelections": 5,
+          "items": [
+            {
+              "id": "queijo-extra",
+              "name": "Queijo extra",
+              "price": 6
+            },
+            {
+              "id": "bacon",
+              "name": "Bacon",
+              "price": 7
+            },
+            {
+              "id": "azeitona",
+              "name": "Azeitona",
+              "price": 4.5
+            }
+          ]
+        },
+        "removableIngredients": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "id": "pizza-bacon-milho",
+      "categoryId": "pizzas",
+      "name": "Bacon e milho",
+      "description": "Bacon crocante, milho doce e muçarela em uma combinação equilibrada.",
+      "shortDescription": "Bacon crocante, milho doce e muçarela em uma combinação equilibrada.",
+      "price": 45.9,
+      "image": "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=1200&q=85",
+      "featured": false,
+      "available": true,
+      "ingredients": [
+        "Molho de tomate",
+        "Muçarela",
+        "Bacon",
+        "Milho"
+      ],
+      "customization": {
+        "enabled": true,
+        "sizes": [
+          {
+            "id": "media",
+            "name": "Média",
+            "slices": 6,
+            "price": 45.9
+          },
+          {
+            "id": "grande",
+            "name": "Grande",
+            "slices": 8,
+            "price": 52.9
+          },
+          {
+            "id": "familia",
+            "name": "Família",
+            "slices": 12,
+            "price": 59.9
+          }
+        ],
+        "halfAndHalf": {
+          "enabled": true,
+          "maxFlavors": 2,
+          "pricing": "highest"
+        },
+        "toppings": {
+          "enabled": true,
+          "maxSelections": 5,
+          "items": [
+            {
+              "id": "queijo-extra",
+              "name": "Queijo extra",
+              "price": 6
+            },
+            {
+              "id": "bacon",
+              "name": "Bacon",
+              "price": 7
+            },
+            {
+              "id": "azeitona",
+              "name": "Azeitona",
+              "price": 4.5
+            }
+          ]
+        },
+        "removableIngredients": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "id": "pizza-caprese",
+      "categoryId": "pizzas",
+      "name": "Caprese",
+      "description": "Tomate fresco, muçarela e manjericão com um toque delicado de azeite.",
+      "shortDescription": "Tomate fresco, muçarela e manjericão com um toque delicado de azeite.",
+      "price": 46.9,
+      "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=85",
+      "featured": false,
+      "available": true,
+      "ingredients": [
+        "Molho de tomate",
+        "Muçarela de búfala",
+        "Tomate",
+        "Manjericão"
+      ],
+      "customization": {
+        "enabled": true,
+        "sizes": [
+          {
+            "id": "media",
+            "name": "Média",
+            "slices": 6,
+            "price": 46.9
+          },
+          {
+            "id": "grande",
+            "name": "Grande",
+            "slices": 8,
+            "price": 53.9
+          },
+          {
+            "id": "familia",
+            "name": "Família",
+            "slices": 12,
+            "price": 60.9
+          }
+        ],
+        "halfAndHalf": {
+          "enabled": true,
+          "maxFlavors": 2,
+          "pricing": "highest"
+        },
+        "toppings": {
+          "enabled": true,
+          "maxSelections": 5,
+          "items": [
+            {
+              "id": "queijo-extra",
+              "name": "Queijo extra",
+              "price": 6
+            },
+            {
+              "id": "bacon",
+              "name": "Bacon",
+              "price": 7
+            },
+            {
+              "id": "azeitona",
+              "name": "Azeitona",
+              "price": 4.5
+            }
+          ]
+        },
+        "removableIngredients": {
+          "enabled": true
+        }
+      }
     }
   ]
 }
