@@ -229,8 +229,17 @@
   const moveMobile = (direction) => {
     if (!mobileMode.matches || intro?.classList.contains('has-details')) return;
     const nextIndex = (activeIndex + direction + items.length) % items.length;
-    wheel.classList.remove('is-mobile-next', 'is-mobile-previous'); void wheel.offsetWidth;
-    wheel.classList.add(direction > 0 ? 'is-mobile-next' : 'is-mobile-previous'); setActiveItem(nextIndex);
+    const outgoingItem = items[activeIndex];
+
+    items.forEach(item => item.classList.remove('is-mobile-leaving-next', 'is-mobile-leaving-previous'));
+    if (outgoingItem) {
+      outgoingItem.classList.add(direction > 0 ? 'is-mobile-leaving-next' : 'is-mobile-leaving-previous');
+    }
+
+    wheel.classList.remove('is-mobile-next', 'is-mobile-previous');
+    void wheel.offsetWidth;
+    wheel.classList.add(direction > 0 ? 'is-mobile-next' : 'is-mobile-previous');
+    setActiveItem(nextIndex);
   };
 
   const animateTransfer = (source, destination, onFinish) => {
@@ -417,7 +426,13 @@
     if (event.propertyName !== "transform") return;
     wheel.classList.remove("is-snapping"); updateActiveItem();
   });
-  wheel.addEventListener("animationend", () => wheel.classList.remove("is-mobile-next", "is-mobile-previous"));
+  wheel.addEventListener("animationend", (event) => {
+    if (event.target.matches("[data-wheel-item]")) {
+      event.target.classList.remove("is-mobile-leaving-next", "is-mobile-leaving-previous");
+      return;
+    }
+    wheel.classList.remove("is-mobile-next", "is-mobile-previous");
+  });
   wheel.addEventListener("pointerdown", (event) => {
     if (mobileMode.matches) {
       if (event.target.closest(".pizza-mobile-nav button")) return;
