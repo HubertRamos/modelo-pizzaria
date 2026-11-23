@@ -427,7 +427,9 @@
     wheel.classList.remove("is-snapping"); updateActiveItem();
   });
   wheel.addEventListener("animationend", (event) => {
-    if (event.target.matches("[data-wheel-item]")) {
+    if (event.target.matches("[data-wheel-item]") &&
+        (event.target.classList.contains("is-mobile-leaving-next") ||
+         event.target.classList.contains("is-mobile-leaving-previous"))) {
       event.target.classList.remove("is-mobile-leaving-next", "is-mobile-leaving-previous");
       return;
     }
