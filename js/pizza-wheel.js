@@ -114,16 +114,7 @@
       indicator.className = 'pizza-mobile-nav__pill';
       indicator.setAttribute('aria-label', 'Mostrar ' + (item.dataset.pizzaName || ('pizza ' + (index + 1))));
       indicator.setAttribute('aria-pressed', 'false');
-      indicator.addEventListener('click', () => {
-        if (index === activeIndex) return;
-        moveMobile(index > activeIndex ? 1 : -1);
-        if (activeIndex !== index) {
-          setActiveItem(index);
-          wheel.classList.remove('is-mobile-next', 'is-mobile-previous');
-          void wheel.offsetWidth;
-          wheel.classList.add(index > activeIndex ? 'is-mobile-next' : 'is-mobile-previous');
-        }
-      });
+      indicator.addEventListener('click', () => moveMobileTo(index));
       mobileNav.append(indicator);
       return indicator;
     });
@@ -234,9 +225,9 @@
     }
   };
 
-  const moveMobile = (direction) => {
-    if (!mobileMode.matches || intro?.classList.contains('has-details')) return;
-    const nextIndex = (activeIndex + direction + items.length) % items.length;
+  const moveMobileTo = (nextIndex) => {
+    if (!mobileMode.matches || intro?.classList.contains('has-details') || nextIndex === activeIndex) return;
+    const direction = nextIndex > activeIndex ? 1 : -1;
     const outgoingItem = items[activeIndex];
 
     items.forEach(item => item.classList.remove('is-mobile-leaving-next', 'is-mobile-leaving-previous'));
@@ -248,6 +239,11 @@
     void wheel.offsetWidth;
     wheel.classList.add(direction > 0 ? 'is-mobile-next' : 'is-mobile-previous');
     setActiveItem(nextIndex);
+  };
+
+  const moveMobile = (direction) => {
+    if (!mobileMode.matches || intro?.classList.contains('has-details')) return;
+    moveMobileTo((activeIndex + direction + items.length) % items.length);
   };
 
   const animateTransfer = (source, destination, onFinish) => {
