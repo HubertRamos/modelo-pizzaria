@@ -7,7 +7,7 @@
     document.querySelectorAll("[data-store]").forEach(node=>setText(node,get(store,node.dataset.store)));
     document.querySelectorAll("[data-store-link]").forEach(node=>{const value=get(store,node.dataset.storeLink);if(node.dataset.storeLink==="contact.email"&&value){node.href="mailto:"+value;node.textContent=value}else safeLink(node,value)});
     const about=store.about||{};
-    if(about.enabled===false){$("#sobre")?.remove()}
+    if(about.enabled===false){$("#sobre")?.remove();document.querySelectorAll('a[href="#sobre"]').forEach(node=>node.remove())}
     const highlights=$("#story-highlights");
     if(highlights&&Array.isArray(about.highlights)){highlights.replaceChildren();about.highlights.forEach(value=>{if(typeof value!=="string"||!value.trim())return;const span=document.createElement("span");span.textContent=value;highlights.append(span)})}
     const socials=$("#footer-socials");
@@ -15,7 +15,7 @@
     const hours=$("#footer-hours");
     if(hours&&Array.isArray(store.openingHours)){hours.replaceChildren();store.openingHours.forEach(item=>{if(!item?.days||!item?.hours)return;const p=document.createElement("p"),days=document.createElement("span"),time=document.createElement("span");days.textContent=item.days;time.textContent=item.hours;p.append(days,time);hours.append(p)})}
     const year=$("#footer-year");if(year)year.textContent=String(new Date().getFullYear());
-    const whatsapp=$("#footer-whatsapp");if(whatsapp&&store.whatsappNumber){const digits=String(store.whatsappNumber).replace(/\D/g,"");if(digits)safeLink(whatsapp,"https://wa.me/"+digits)}
+    const whatsapp=$("#footer-whatsapp");if(whatsapp){const digits=String(store.whatsappNumber||"").replace(/[^0-9]/g,"");if(digits)safeLink(whatsapp,"https://wa.me/"+digits);else whatsapp.hidden=true}
     const mapLink=$('[data-store-link="about.mapUrl"]');if(mapLink&&!store.about?.mapUrl)mapLink.hidden=true;
   };
   fetch("./data/store.json").then(response=>{if(!response.ok)throw new Error("store.json indisponível");return response.json()}).then(render).catch(error=>console.warn("RUOTA: configurações institucionais não carregadas.",error));
