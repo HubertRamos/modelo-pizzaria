@@ -818,9 +818,9 @@
 }
 
 
-/* Desloca a roda inteira para a direita no desktop, sem alterar o mobile. */
+/* Desloca ainda mais a roda inteira para a direita no desktop. */
 @media (min-width: 761px) {
   .pizza-wheel {
-    right: -36%;
+    right: -44%;
   }
 }
