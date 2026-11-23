@@ -3,6 +3,24 @@
   const setText=(node,value)=>{if(node&&typeof value==="string"&&value.trim())node.textContent=value};
   const safeLink=(node,url)=>{if(!node||typeof url!=="string"||!url.trim())return;try{const parsed=new URL(url,location.href);if(!["http:","https:","mailto:","tel:"].includes(parsed.protocol))return;node.href=parsed.href}catch{}};
   const get=(object,path)=>path.split(".").reduce((value,key)=>value?.[key],object);
+  const motionSections=[...document.querySelectorAll(".starters-section,.menu-section,.site-footer")];
+  const motionHeader=$(".site-header"),motionHero=$(".pizza-intro");
+  const reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!reduceMotion){
+    motionHeader?.classList.add("motion-ready");
+    motionHero?.classList.add("motion-ready");
+    requestAnimationFrame(()=>{motionHeader?.classList.add("is-in-view");motionHero?.classList.add("is-in-view")});
+    if("IntersectionObserver" in window){
+      const motionObserver=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(!entry.isIntersecting)return;
+          entry.target.classList.add("is-in-view");
+          motionObserver.unobserve(entry.target);
+        });
+      },{threshold:.12,rootMargin:"0px 0px -7% 0px"});
+      motionSections.forEach(section=>{section.classList.add("motion-ready");motionObserver.observe(section)});
+    }else motionSections.forEach(section=>section.classList.add("motion-ready","is-in-view"));
+  }
   const story=$("#sobre");
   if(story&&"IntersectionObserver" in window&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
     story.classList.add("story-motion-ready");
