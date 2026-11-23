@@ -67,6 +67,41 @@ Use `true` ou `false` para mostrar ou ocultar Pix, dinheiro e cartão. Pelo meno
 
 Edite `data/catalog.json`. Ele é a fonte única das categorias, produtos, preços, ingredientes e opções de personalização. Consulte as estruturas já presentes no arquivo como referência para cadastrar novos itens.
 
+
+## Identidade da pizzaria, história e footer
+
+A apresentação institucional também é configurada em `data/store.json`. O repositório vem com uma marca fictícia de demonstração — **Forno & Terra** — para que o modelo possa ser apresentado visualmente. Substitua os textos e dados de exemplo antes de publicar para uma pizzaria real.
+
+```json
+{
+  "brand": { "name": "NOME DA PIZZARIA", "tagline": "Uma frase curta sobre a casa." },
+  "about": {
+    "enabled": true,
+    "eyebrow": "NOSSA ESSÊNCIA",
+    "title": "Nossa história",
+    "description": "Conte aqui a história da pizzaria.",
+    "address": "Rua, número · Bairro · Cidade/UF",
+    "mapUrl": "https://maps.google.com/...",
+    "highlights": ["Massa artesanal", "Ingredientes selecionados"]
+  },
+  "contact": {
+    "email": "contato@exemplo.com",
+    "instagram": "https://instagram.com/sua-pizzaria",
+    "facebook": "https://facebook.com/sua-pizzaria"
+  },
+  "openingHours": [
+    { "days": "Ter–Qui", "hours": "18h–23h" },
+    { "days": "Sex–Dom", "hours": "18h–00h" },
+    { "days": "Segunda", "hours": "Fechado" }
+  ]
+}
+```
+
+- Defina `about.enabled: false` para remover a seção institucional.
+- Deixe redes sociais, mapa e WhatsApp sem configuração até ter os endereços reais; links sem destino são ocultados.
+- A seção Entradas é alimentada pela categoria `entradas` de `data/catalog.json`. Os dois itens cadastrados são exemplos demonstrativos e podem ser editados ou removidos como qualquer produto.
+- As imagens de demonstração usam endereços externos. Troque-as pelas fotos autorizadas da pizzaria antes da publicação final.
+
 ## Limitações desta versão
 
 - O projeto é estático: não possui backend, banco de dados, painel administrativo ou registro central de pedidos.
