@@ -629,3 +629,85 @@
 /* Duas ações independentes no detalhe da roda. */
 .pizza-detail__actions{display:flex;align-items:center;flex-wrap:wrap;gap:.9rem;margin-top:1.35rem}.pizza-detail__actions .pizza-detail__order{margin-top:0}.pizza-detail__customize{border:1px solid rgb(241 240 237 / 25%);border-radius:999px;padding:.8rem 1.1rem;background:transparent;color:var(--color-text);font:600 .74rem var(--font-ui);cursor:pointer;transition:border-color .2s,background .2s}.pizza-detail__customize:hover{border-color:#e98232;background:rgb(233 130 50 / 10%)}.pizza-detail__customize:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:760px){.pizza-detail__actions{gap:.65rem}.pizza-detail__actions .pizza-detail__order{margin-top:0}}
+
+
+/* Ações lado a lado: o botão laranja inteiro contém ícone e texto. */
+.pizza-detail__actions{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+  align-items:center;
+  gap:.55rem;
+  width:100%;
+  margin-top:1.25rem;
+}
+.pizza-detail__actions .pizza-detail__order{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.45rem;
+  width:100%;
+  min-width:0;
+  min-height:2.8rem;
+  margin:0;
+  padding:.65rem .7rem;
+  border:0;
+  border-radius:999px;
+  background:#e98232;
+  color:#211b17;
+  font:700 .68rem/1.15 var(--font-ui);
+  white-space:nowrap;
+  text-align:center;
+  transition:background .2s,transform .2s,box-shadow .2s;
+}
+.pizza-detail__actions .pizza-detail__order:hover{
+  background:#f29648;
+  box-shadow:0 .45rem 1.2rem rgb(233 130 50 / 22%);
+  transform:translateY(-1px);
+}
+.pizza-detail__actions .pizza-detail__order .order-link__button{
+  display:inline-grid;
+  flex:0 0 auto;
+  width:1.15rem;
+  height:1.15rem;
+  aspect-ratio:1;
+  place-items:center;
+  background:transparent;
+  box-shadow:none;
+}
+.pizza-detail__actions .pizza-detail__order .order-link__button svg{
+  display:block;
+  width:1.05rem;
+  height:1.05rem;
+  stroke:#211b17;
+}
+.pizza-detail__actions .pizza-detail__order .order-link__label{
+  color:#211b17;
+  font:700 .68rem/1.15 var(--font-ui);
+}
+.pizza-detail__customize{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  min-width:0;
+  min-height:2.8rem;
+  margin:0;
+  padding:.65rem .55rem;
+  font-size:.68rem;
+  line-height:1.15;
+  white-space:nowrap;
+}
+@media(max-width:760px){
+  .pizza-detail{padding:1.1rem}
+  .pizza-detail__actions{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:.5rem}
+}
+@media(max-width:380px){
+  .pizza-detail__actions .pizza-detail__order,
+  .pizza-detail__actions .pizza-detail__order .order-link__label,
+  .pizza-detail__customize{font-size:.61rem}
+  .pizza-detail__actions .pizza-detail__order{gap:.3rem;padding-inline:.4rem}
+  .pizza-detail__customize{padding-inline:.35rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .pizza-detail__actions .pizza-detail__order{transition:none}
+}
