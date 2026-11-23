@@ -865,7 +865,17 @@
   }
 
   .pizza-mobile-nav {
-    gap: .45rem;
+    left: 50%;
+    right: auto;
+    bottom: .65rem;
+    width: max-content;
+    gap: .35rem;
+    padding: .38rem .55rem;
+    border: 1px solid rgb(241 240 237 / 12%);
+    border-radius: 999px;
+    background: rgb(24 24 24 / 62%);
+    box-shadow: 0 4px 18px rgb(0 0 0 / 18%);
+    transform: translateX(-50%);
     pointer-events: auto;
   }
 
@@ -889,7 +899,8 @@
 
   .pizza-mobile-nav__pill.is-active {
     width: 1.45rem;
-    background: var(--color-accent, #e87932);
+    background: #e87932;
+    box-shadow: 0 0 0 2px rgb(232 121 50 / 18%), 0 0 12px rgb(232 121 50 / 48%);
   }
 
   .pizza-featured {
