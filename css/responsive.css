@@ -850,3 +850,63 @@
     transition: none !important;
   }
 }
+
+
+/* Mobile composition refinement: pizza on the right, position pills only. */
+@media (max-width: 760px) {
+  .pizza-wheel__item {
+    right: 5vw !important;
+    left: auto !important;
+    transform: translate(50%, -50%) scale(.9);
+  }
+
+  .pizza-wheel__item.is-active {
+    transform: translate(50%, -50%) scale(1);
+  }
+
+  .pizza-mobile-nav {
+    gap: .45rem;
+    pointer-events: auto;
+  }
+
+  .pizza-mobile-nav__arrow,
+  .pizza-mobile-nav__count {
+    display: none !important;
+  }
+
+  .pizza-mobile-nav__pill {
+    display: block;
+    width: .42rem;
+    height: .42rem;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgb(241 240 237 / 42%);
+    box-shadow: 0 1px 8px rgb(0 0 0 / 24%);
+    cursor: pointer;
+    transition: width 260ms ease, background-color 260ms ease, opacity 260ms ease;
+  }
+
+  .pizza-mobile-nav__pill.is-active {
+    width: 1.45rem;
+    background: var(--color-accent, #e87932);
+  }
+
+  .pizza-featured {
+    right: 5vw;
+    left: auto;
+    transform: translate(50%, 0) scale(.94);
+  }
+
+  .pizza-intro.has-details .pizza-featured {
+    transform: translate(50%, 0) scale(1);
+  }
+}
+
+@media (max-width: 420px) {
+  .pizza-wheel__item { right: 3vw !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pizza-mobile-nav__pill { transition: none !important; }
+}
