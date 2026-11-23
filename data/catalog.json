@@ -2,6 +2,12 @@
   "version": 1,
   "categories": [
     {
+      "id": "entradas",
+      "name": "Entradas",
+      "description": "Para começar e compartilhar.",
+      "order": 0
+    },
+    {
       "id": "pizzas",
       "name": "Pizzas",
       "description": "Receitas para compartilhar.",
@@ -21,6 +27,40 @@
     }
   ],
   "products": [
+    {
+      "id": "entrada-pao-alho",
+      "categoryId": "entradas",
+      "name": "Pão de alho artesanal",
+      "description": "Pão dourado na hora, com manteiga de alho, ervas frescas e uma camada delicada de queijo gratinado. Perfeito para compartilhar enquanto a pizza fica pronta.",
+      "shortDescription": "Pão dourado, manteiga de alho, ervas frescas e queijo gratinado.",
+      "price": 19.9,
+      "image": "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=900&q=80",
+      "featured": false,
+      "available": true,
+      "ingredients": [
+        "Pão artesanal",
+        "Manteiga de alho",
+        "Ervas frescas",
+        "Queijo"
+      ]
+    },
+    {
+      "id": "entrada-bruschetta",
+      "categoryId": "entradas",
+      "name": "Bruschetta da casa",
+      "description": "Fatias de pão tostado com tomates frescos, manjericão e azeite extravirgem. Uma entrada leve, aromática e feita para abrir o apetite.",
+      "shortDescription": "Tomates frescos, manjericão e azeite sobre pão tostado.",
+      "price": 24.9,
+      "image": "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&w=900&q=80",
+      "featured": false,
+      "available": true,
+      "ingredients": [
+        "Pão italiano",
+        "Tomate fresco",
+        "Manjericão",
+        "Azeite extravirgem"
+      ]
+    },
     {
       "id": "pizza-margherita",
       "categoryId": "pizzas",
