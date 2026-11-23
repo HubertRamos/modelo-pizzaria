@@ -601,3 +601,34 @@
   .pizza-wheel__item, .pizza-wheel.is-mobile-next .pizza-wheel__item.is-active,
   .pizza-wheel.is-mobile-previous .pizza-wheel__item.is-active { animation: none !important; transition: none !important; }
 }
+
+
+/* No mobile, a pizza anterior acompanha a entrada da próxima. */
+@media (max-width: 760px) {
+  .pizza-wheel__item.is-mobile-leaving-next {
+    z-index: 1;
+    pointer-events: none;
+    animation: ruota-pizza-exit-next 360ms cubic-bezier(.4, 0, .7, .2) forwards;
+  }
+
+  .pizza-wheel__item.is-mobile-leaving-previous {
+    z-index: 1;
+    pointer-events: none;
+    animation: ruota-pizza-exit-previous 360ms cubic-bezier(.4, 0, .7, .2) forwards;
+  }
+
+  @keyframes ruota-pizza-exit-next {
+    to { opacity: 0; transform: translate(calc(-50% - 3.5rem), -50%) scale(.88); }
+  }
+
+  @keyframes ruota-pizza-exit-previous {
+    to { opacity: 0; transform: translate(calc(-50% + 3.5rem), -50%) scale(.88); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pizza-wheel__item.is-mobile-leaving-next,
+  .pizza-wheel__item.is-mobile-leaving-previous {
+    animation: none !important;
+  }
+}
