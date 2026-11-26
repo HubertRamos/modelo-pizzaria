@@ -20,8 +20,8 @@
 .starters-section__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
 .starter-card{display:grid;grid-template-columns:minmax(9rem,.85fr) minmax(0,1fr);gap:1.4rem;align-items:center;padding:1rem;border:1px solid rgb(241 240 237 / 12%);background:rgb(255 255 255 / 2%)}
 .starter-card__image{aspect-ratio:1.12;overflow:hidden;background-position:center;background-size:cover}
-.starter-card__image--bread{background-image:url("https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=700&q=80")}
-.starter-card__image--burrata{background-image:url("https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&w=700&q=80")}
+.starter-card__image--bread{background-image:url("https://images.unsplash.com/photo-1649688423692-308d2fc1027d?auto=format&fit=crop&w=700&q=85")}
+.starter-card__image--burrata{background-image:url("https://images.unsplash.com/photo-1792736945306-ad15bd4cc438?auto=format&fit=crop&w=700&q=85")}
 .starter-card span{color:#e99a48;font:600 .58rem var(--font-ui);letter-spacing:.16em}
 .starter-card h3{margin:.6rem 0;color:#f1f0ed;font:500 clamp(1.5rem,2.4vw,2.2rem)/1 var(--font-display)}
 .starter-card p{margin:0;color:rgb(241 240 237 / 62%);font:.76rem/1.65 var(--font-ui)}
