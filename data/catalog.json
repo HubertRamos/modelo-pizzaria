@@ -34,7 +34,7 @@
       "description": "Pão dourado na hora, com manteiga de alho, ervas frescas e uma camada delicada de queijo gratinado. Perfeito para compartilhar enquanto a pizza fica pronta.",
       "shortDescription": "Pão dourado, manteiga de alho, ervas frescas e queijo gratinado.",
       "price": 19.9,
-      "image": "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=900&q=80",
+      "image": "https://images.unsplash.com/photo-1649688423692-308d2fc1027d?auto=format&fit=crop&w=1000&q=85",
       "featured": false,
       "available": true,
       "ingredients": [
@@ -51,7 +51,7 @@
       "description": "Fatias de pão tostado com tomates frescos, manjericão e azeite extravirgem. Uma entrada leve, aromática e feita para abrir o apetite.",
       "shortDescription": "Tomates frescos, manjericão e azeite sobre pão tostado.",
       "price": 24.9,
-      "image": "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&w=900&q=80",
+      "image": "https://images.unsplash.com/photo-1792736945306-ad15bd4cc438?auto=format&fit=crop&w=1000&q=85",
       "featured": false,
       "available": true,
       "ingredients": [
@@ -67,7 +67,7 @@
       "name": "Margherita",
       "description": "Uma pizza clássica, leve e cheia de frescor. A base recebe nosso molho de tomate, preparado para realçar o sabor dos ingredientes, e uma generosa camada de muçarela que derrete no forno até ficar cremosa. Tomates frescos acrescentam suculência, enquanto as folhas de manjericão liberam um aroma marcante e completam a combinação. O resultado é uma mistura equilibrada entre acidez, cremosidade e notas herbais, perfeita para quem aprecia sabores delicados sem abrir mão de personalidade. Uma escolha simples na medida certa, inspirada em um dos grandes clássicos da pizza italiana.",
       "price": 42.9,
-      "image": "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1200&q=85",
+      "image": "https://images.unsplash.com/photo-1774806189017-f4c1f2760ad2?auto=format&fit=crop&w=1200&q=85",
       "featured": true,
       "available": true,
       "ingredients": [
@@ -298,7 +298,7 @@
       "description": "Fatias de pepperoni levemente picantes sobre queijo derretido e molho de tomate.",
       "shortDescription": "Fatias de pepperoni levemente picantes sobre queijo derretido e molho de tomate.",
       "price": 47.9,
-      "image": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=1200&q=85",
+      "image": "https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?auto=format&fit=crop&w=1200&q=85",
       "featured": false,
       "available": true,
       "ingredients": [
